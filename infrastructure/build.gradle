@@ -1,7 +1,5 @@
 plugins {
-    //id 'java'
     id 'java-library'
-    id "com.zyxist.chainsaw" version "0.3.1"
 }
 
 group 'com.baeldung.dddmodules.infrastructure'
@@ -12,9 +10,9 @@ repositories {
 }
 
 dependencies {
+    implementation project( ':sharedkernel' )
     implementation project( ':shippingcontext' )
     implementation project( ':ordercontext' )
-    implementation project( ':sharedkernel' )
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
     // https://mvnrepository.com/artifact/org.projectlombok/lombok
