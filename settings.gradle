@@ -1,0 +1,6 @@
+rootProject.name = 'DDDShipping'
+include 'sharedkernel'
+include 'ordercontext'
+include 'shippingcontext'
+include 'infrastructure'
+include 'mainapp'
