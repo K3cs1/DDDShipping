@@ -1,3 +1,4 @@
+/*
 buildscript {
     repositories {
         maven {
@@ -8,9 +9,11 @@ buildscript {
         classpath "org.javamodularity:moduleplugin:1.8.7"
     }
 }
+*/
 
 plugins {
     id 'java'
+    id 'java-library'
 }
 
 group 'com.baeldung.dddmodules'
@@ -21,18 +24,17 @@ repositories {
 }
 
 dependencies {
-    project( ':infrastructure' )
-    project( ':mainapp' )
-    project( ':ordercontext' )
-    project( ':sharedkernel' )
-    project( ':shippingcontext' )
+    implementation project( ':infrastructure' )
+    implementation project( ':mainapp' )
+    implementation project( ':ordercontext' )
+    implementation project( ':sharedkernel' )
+    implementation project( ':shippingcontext' )
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
     // https://mvnrepository.com/artifact/org.projectlombok/lombok
     implementation group: 'org.projectlombok', name: 'lombok', version: '1.18.20'
-
 }
-
+/*
 subprojects {
     apply plugin: 'java';
     apply plugin: 'org.javamodularity.moduleplugin'
@@ -46,6 +48,7 @@ subprojects {
         mavenCentral()
     }
 }
+*/
 
 test {
     useJUnitPlatform()

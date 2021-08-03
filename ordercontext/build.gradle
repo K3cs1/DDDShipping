@@ -2,7 +2,7 @@ plugins {
     id 'java-library'
 }
 
-group 'com.baeldung.dddmodules.ordercontext'
+group 'com.baeldung.dddmodules'
 version '1.0-SNAPSHOT'
 
 repositories {

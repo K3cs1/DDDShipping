@@ -8,6 +8,4 @@ module com.baeldung.dddmodules.infrastructure {
 			with com.baeldung.dddmodules.infrastructure.db.InMemoryOrderStore;
 	provides com.baeldung.dddmodules.shippingcontext.repository.ShippingOrderRepository
 			with com.baeldung.dddmodules.infrastructure.db.InMemoryOrderStore;
-	exports com.baeldung.dddmodules.infrastructure.db;
-	exports com.baeldung.dddmodules.infrastructure.events;
 }
