@@ -1,7 +1,8 @@
 module com.baeldung.dddmodules.infrastructure {
-	requires com.baeldung.dddmodules.sharedkernel;
-	requires com.baeldung.dddmodules.ordercontext;
-	requires com.baeldung.dddmodules.shippingcontext;
+	requires static lombok;
+	requires transitive com.baeldung.dddmodules.sharedkernel;
+	requires transitive com.baeldung.dddmodules.ordercontext;
+	requires transitive com.baeldung.dddmodules.shippingcontext;
 	provides com.baeldung.dddmodules.sharedkernel.events.EventBus
 			with com.baeldung.dddmodules.infrastructure.events.SimpleEventBus;
 	provides com.baeldung.dddmodules.ordercontext.repository.CustomerOrderRepository

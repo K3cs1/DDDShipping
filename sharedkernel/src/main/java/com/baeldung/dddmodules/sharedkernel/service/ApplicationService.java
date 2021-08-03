@@ -5,6 +5,7 @@ import com.baeldung.dddmodules.sharedkernel.events.EventBus;
 import com.baeldung.dddmodules.sharedkernel.events.EventSubscriber;
 
 public interface ApplicationService {
+
 	default <E extends ApplicationEvent> void publishEvent( E event ) {
 		EventBus eventBus = getEventBus();
 		if ( eventBus != null ) {

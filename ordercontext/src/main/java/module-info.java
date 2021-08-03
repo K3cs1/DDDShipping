@@ -1,6 +1,6 @@
 module com.baeldung.dddmodules.ordercontext {
+	requires static lombok;
 	requires com.baeldung.dddmodules.sharedkernel;
-	requires lombok;
 	exports com.baeldung.dddmodules.ordercontext.service;
 	exports com.baeldung.dddmodules.ordercontext.model;
 	exports com.baeldung.dddmodules.ordercontext.repository;

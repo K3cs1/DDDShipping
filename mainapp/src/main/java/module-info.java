@@ -1,4 +1,5 @@
 module com.baeldung.dddmodules.mainapp {
+	requires static lombok;
 	uses com.baeldung.dddmodules.sharedkernel.events.EventBus;
 	uses com.baeldung.dddmodules.ordercontext.service.OrderService;
 	uses com.baeldung.dddmodules.ordercontext.repository.CustomerOrderRepository;
