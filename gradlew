@@ -1,5 +1,5 @@
 #!/usr/bin/env sh
-
+JAVA_HOME=/usr/lib/jvm/java-11-oracle
 #
 # Copyright 2015 the original author or authors.
 #
