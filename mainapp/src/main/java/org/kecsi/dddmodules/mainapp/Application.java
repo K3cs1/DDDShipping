@@ -9,9 +9,14 @@ import org.kecsi.dddmodules.ordercontext.service.OrderService;
 import org.kecsi.dddmodules.sharedkernel.events.EventBus;
 import org.kecsi.dddmodules.shippingcontext.repository.ShippingOrderRepository;
 import org.kecsi.dddmodules.shippingcontext.service.ShippingService;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+@SpringBootApplication( scanBasePackages = "org.kecsi.dddmodules" )
 public class Application {
 	public static void main( String args[] ) {
+		SpringApplication.run( Application.class, args );
+		
 		Map<Class<?>, Object> container = createContainer();
 		OrderService orderService = (OrderService) container.get( OrderService.class );
 		ShippingService shippingService = (ShippingService) container.get( ShippingService.class );

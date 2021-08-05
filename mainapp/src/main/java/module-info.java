@@ -5,7 +5,10 @@ import org.kecsi.dddmodules.shippingcontext.repository.ShippingOrderRepository;
 import org.kecsi.dddmodules.shippingcontext.service.ShippingService;
 
 module org.kecsi.dddmodules.mainapp {
-	requires static lombok;
+	requires spring.boot.autoconfigure;
+	requires spring.boot;
+	requires spring.context;
+	requires lombok;
 	uses EventBus;
 	uses OrderService;
 	uses CustomerOrderRepository;

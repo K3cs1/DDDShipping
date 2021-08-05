@@ -3,7 +3,9 @@ package org.kecsi.dddmodules.sharedkernel.service;
 import org.kecsi.dddmodules.sharedkernel.events.ApplicationEvent;
 import org.kecsi.dddmodules.sharedkernel.events.EventBus;
 import org.kecsi.dddmodules.sharedkernel.events.EventSubscriber;
+import org.springframework.stereotype.Service;
 
+@Service
 public interface ApplicationService {
 
 	default <E extends ApplicationEvent> void publishEvent( E event ) {

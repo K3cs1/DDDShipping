@@ -11,13 +11,22 @@ import org.kecsi.dddmodules.ordercontext.repository.CustomerOrderRepository;
 import org.kecsi.dddmodules.shippingcontext.model.PackageItem;
 import org.kecsi.dddmodules.shippingcontext.model.ShippableOrder;
 import org.kecsi.dddmodules.shippingcontext.repository.ShippingOrderRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 
-public class InMemoryOrderStore implements CustomerOrderRepository, ShippingOrderRepository {
+public class InMemoryOrderStore {
 
+	private CustomerOrderRepository customerOrderRepository;
+	private ShippingOrderRepository shippingOrderRepository;
 	private Map<Integer, PersistenceOrder> ordersDb = new HashMap<>();
-	private volatile static InMemoryOrderStore instance = new InMemoryOrderStore();
+	//private volatile static InMemoryOrderStore instance = new InMemoryOrderStore();
 
-	@Override
+	@Autowired
+	public InMemoryOrderStore( CustomerOrderRepository customerOrderRepository, ShippingOrderRepository shippingOrderRepository ) {
+		this.customerOrderRepository = customerOrderRepository;
+		this.shippingOrderRepository = shippingOrderRepository;
+	}
+
+	//	@Override
 	public void saveCustomerOrder( CustomerOrder order ) {
 		this.ordersDb.put( order.getOrderId(), new PersistenceOrder( order.getOrderId(),
 				order.getPaymentMethod(),
@@ -34,7 +43,7 @@ public class InMemoryOrderStore implements CustomerOrderRepository, ShippingOrde
 		) );
 	}
 
-	@Override
+	//	@Override
 	public Optional<ShippableOrder> findShippableOrder( int orderId ) {
 		if ( !this.ordersDb.containsKey( orderId ) ) return Optional.empty();
 		PersistenceOrder orderRecord = this.ordersDb.get( orderId );
@@ -46,9 +55,9 @@ public class InMemoryOrderStore implements CustomerOrderRepository, ShippingOrde
 						).collect( Collectors.toList() ) ) );
 	}
 
-	public static InMemoryOrderStore provider() {
-		return instance;
-	}
+//	public static InMemoryOrderStore provider() {
+//		return instance;
+//	}
 
 	public static class PersistenceOrder {
 		public int orderId;
