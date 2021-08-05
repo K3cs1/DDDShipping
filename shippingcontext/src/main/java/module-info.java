@@ -1,9 +1,12 @@
-module com.baeldung.dddmodules.shippingcontext {
+import org.kecsi.dddmodules.shippingcontext.service.ParcelShippingService;
+import org.kecsi.dddmodules.shippingcontext.service.ShippingService;
+
+module org.kecsi.dddmodules.shippingcontext {
 	requires static lombok;
-	requires com.baeldung.dddmodules.sharedkernel;
-	exports com.baeldung.dddmodules.shippingcontext.service;
-	exports com.baeldung.dddmodules.shippingcontext.model;
-	exports com.baeldung.dddmodules.shippingcontext.repository;
-	provides com.baeldung.dddmodules.shippingcontext.service.ShippingService
-			with com.baeldung.dddmodules.shippingcontext.service.ParcelShippingService;
+	requires org.kecsi.dddmodules.sharedkernel;
+	exports org.kecsi.dddmodules.shippingcontext.service;
+	exports org.kecsi.dddmodules.shippingcontext.model;
+	exports org.kecsi.dddmodules.shippingcontext.repository;
+	provides ShippingService
+			with ParcelShippingService;
 }

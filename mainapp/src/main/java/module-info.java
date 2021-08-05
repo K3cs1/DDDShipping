@@ -1,9 +1,15 @@
-module com.baeldung.dddmodules.mainapp {
+import org.kecsi.dddmodules.ordercontext.repository.CustomerOrderRepository;
+import org.kecsi.dddmodules.ordercontext.service.OrderService;
+import org.kecsi.dddmodules.sharedkernel.events.EventBus;
+import org.kecsi.dddmodules.shippingcontext.repository.ShippingOrderRepository;
+import org.kecsi.dddmodules.shippingcontext.service.ShippingService;
+
+module org.kecsi.dddmodules.mainapp {
 	requires static lombok;
-	uses com.baeldung.dddmodules.sharedkernel.events.EventBus;
-	uses com.baeldung.dddmodules.ordercontext.service.OrderService;
-	uses com.baeldung.dddmodules.ordercontext.repository.CustomerOrderRepository;
-	uses com.baeldung.dddmodules.shippingcontext.repository.ShippingOrderRepository;
-	uses com.baeldung.dddmodules.shippingcontext.service.ShippingService;
-	requires transitive com.baeldung.dddmodules.infrastructure;
+	uses EventBus;
+	uses OrderService;
+	uses CustomerOrderRepository;
+	uses ShippingOrderRepository;
+	uses ShippingService;
+	requires transitive org.kecsi.dddmodules.infrastructure;
 }

@@ -1,5 +1,5 @@
-module com.baeldung.dddmodules.sharedkernel {
+module org.kecsi.dddmodules.sharedkernel {
 	requires static lombok;
-	exports com.baeldung.dddmodules.sharedkernel.events;
-	exports com.baeldung.dddmodules.sharedkernel.service;
+	exports org.kecsi.dddmodules.sharedkernel.events;
+	exports org.kecsi.dddmodules.sharedkernel.service;
 }

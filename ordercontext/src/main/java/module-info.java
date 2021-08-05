@@ -1,9 +1,12 @@
-module com.baeldung.dddmodules.ordercontext {
+import org.kecsi.dddmodules.ordercontext.service.CustomerOrderService;
+import org.kecsi.dddmodules.ordercontext.service.OrderService;
+
+module org.kecsi.dddmodules.ordercontext {
 	requires static lombok;
-	requires com.baeldung.dddmodules.sharedkernel;
-	exports com.baeldung.dddmodules.ordercontext.service;
-	exports com.baeldung.dddmodules.ordercontext.model;
-	exports com.baeldung.dddmodules.ordercontext.repository;
-	provides com.baeldung.dddmodules.ordercontext.service.OrderService
-			with com.baeldung.dddmodules.ordercontext.service.CustomerOrderService;
+	requires org.kecsi.dddmodules.sharedkernel;
+	exports org.kecsi.dddmodules.ordercontext.service;
+	exports org.kecsi.dddmodules.ordercontext.model;
+	exports org.kecsi.dddmodules.ordercontext.repository;
+	provides OrderService
+			with CustomerOrderService;
 }

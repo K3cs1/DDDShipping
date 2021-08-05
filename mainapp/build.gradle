@@ -4,7 +4,7 @@ plugins {
     id 'application'
 }
 
-group 'com.baeldung.dddmodules'
+group 'org.kecsi.dddmodules'
 version '1.0-SNAPSHOT'
 
 repositories {
@@ -21,8 +21,8 @@ dependencies {
 }
 
 application {
-    mainModule = 'com.baeldung.dddmodules.mainapp'
-    mainClass = 'com.baeldung.dddmodules.mainapp.Application'
+    mainModule = 'org.kecsi.dddmodules.mainapp'
+    mainClass = 'org.kecsi.dddmodules.mainapp.Application'
 }
 
 test {

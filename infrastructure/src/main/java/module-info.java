@@ -1,12 +1,18 @@
-module com.baeldung.dddmodules.infrastructure {
+import org.kecsi.dddmodules.infrastructure.db.InMemoryOrderStore;
+import org.kecsi.dddmodules.infrastructure.events.SimpleEventBus;
+import org.kecsi.dddmodules.ordercontext.repository.CustomerOrderRepository;
+import org.kecsi.dddmodules.sharedkernel.events.EventBus;
+import org.kecsi.dddmodules.shippingcontext.repository.ShippingOrderRepository;
+
+module org.kecsi.dddmodules.infrastructure {
 	requires static lombok;
-	requires transitive com.baeldung.dddmodules.sharedkernel;
-	requires transitive com.baeldung.dddmodules.ordercontext;
-	requires transitive com.baeldung.dddmodules.shippingcontext;
-	provides com.baeldung.dddmodules.sharedkernel.events.EventBus
-			with com.baeldung.dddmodules.infrastructure.events.SimpleEventBus;
-	provides com.baeldung.dddmodules.ordercontext.repository.CustomerOrderRepository
-			with com.baeldung.dddmodules.infrastructure.db.InMemoryOrderStore;
-	provides com.baeldung.dddmodules.shippingcontext.repository.ShippingOrderRepository
-			with com.baeldung.dddmodules.infrastructure.db.InMemoryOrderStore;
+	requires transitive org.kecsi.dddmodules.sharedkernel;
+	requires transitive org.kecsi.dddmodules.ordercontext;
+	requires transitive org.kecsi.dddmodules.shippingcontext;
+	provides EventBus
+			with SimpleEventBus;
+	provides CustomerOrderRepository
+			with InMemoryOrderStore;
+	provides ShippingOrderRepository
+			with InMemoryOrderStore;
 }
