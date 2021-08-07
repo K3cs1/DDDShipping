@@ -1,5 +1,8 @@
 package org.kecsi.dddmodules.sharedkernel.events;
 
+import org.springframework.stereotype.Service;
+
+@Service
 public interface EventBus {
 	<E extends ApplicationEvent> void publish( E event );
 

@@ -4,10 +4,12 @@ import java.util.List;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.data.annotation.Id;
 
 @Getter
 @Setter
 public class Parcel {
+	@Id
 	private int orderId;
 	private String address;
 	private String trackingId;

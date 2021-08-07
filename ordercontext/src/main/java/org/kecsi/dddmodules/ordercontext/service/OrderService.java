@@ -9,5 +9,5 @@ import org.springframework.stereotype.Service;
 public interface OrderService extends ApplicationService {
 	void placeOrder( CustomerOrder order );
 
-	void setOrderRepository( CustomerOrderRepository orderRepository );
+	//void setOrderRepository( CustomerOrderRepository orderRepository );
 }

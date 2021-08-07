@@ -5,11 +5,13 @@ import java.util.List;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.data.annotation.Id;
 
 @Getter
 @Setter
 @NoArgsConstructor
 public class CustomerOrder {
+	@Id
 	private int orderId;
 	private String paymentMethod;
 	private String address;

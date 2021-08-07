@@ -4,6 +4,7 @@ import org.kecsi.dddmodules.ordercontext.service.OrderService;
 module org.kecsi.dddmodules.ordercontext {
 	requires lombok;
 	requires java.annotation;
+	requires spring.core;
 	requires spring.beans;
 	requires spring.context;
 	requires spring.data.commons;
@@ -14,4 +15,5 @@ module org.kecsi.dddmodules.ordercontext {
 	exports org.kecsi.dddmodules.ordercontext.repository;
 	provides OrderService
 			with CustomerOrderService;
+	opens org.kecsi.dddmodules.ordercontext.repository to spring.core, spring.beans, spring.context;
 }

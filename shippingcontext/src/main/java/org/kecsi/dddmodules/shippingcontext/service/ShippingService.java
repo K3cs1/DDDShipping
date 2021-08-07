@@ -15,5 +15,5 @@ public interface ShippingService extends ApplicationService {
 
 	Optional<Parcel> getParcelByOrderId( int orderId );
 
-	void setOrderRepository( ShippingOrderRepository orderRepository );
+	//void setOrderRepository( ShippingOrderRepository orderRepository );
 }

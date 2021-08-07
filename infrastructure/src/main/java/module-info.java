@@ -4,6 +4,7 @@ import org.kecsi.dddmodules.sharedkernel.events.EventBus;
 module org.kecsi.dddmodules.infrastructure {
 	requires lombok;
 	requires java.annotation;
+	requires spring.core;
 	requires spring.beans;
 	requires spring.context;
 	requires spring.data.commons;

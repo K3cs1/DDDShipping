@@ -12,7 +12,9 @@ import org.kecsi.dddmodules.shippingcontext.model.PackageItem;
 import org.kecsi.dddmodules.shippingcontext.model.ShippableOrder;
 import org.kecsi.dddmodules.shippingcontext.repository.ShippingOrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+@Component
 public class InMemoryOrderStore {
 
 	private CustomerOrderRepository customerOrderRepository;

@@ -8,7 +8,9 @@ import java.util.concurrent.CopyOnWriteArraySet;
 import org.kecsi.dddmodules.sharedkernel.events.ApplicationEvent;
 import org.kecsi.dddmodules.sharedkernel.events.EventBus;
 import org.kecsi.dddmodules.sharedkernel.events.EventSubscriber;
+import org.springframework.stereotype.Component;
 
+@Component
 public class SimpleEventBus implements EventBus {
 
 	private final Map<String, Set<EventSubscriber>> subscribers = new ConcurrentHashMap<>();

@@ -3,16 +3,29 @@ package org.kecsi.dddmodules.ordercontext.service;
 import java.util.HashMap;
 import java.util.Map;
 
+import lombok.NoArgsConstructor;
 import org.kecsi.dddmodules.ordercontext.model.CustomerOrder;
 import org.kecsi.dddmodules.ordercontext.repository.CustomerOrderRepository;
 import org.kecsi.dddmodules.sharedkernel.events.ApplicationEvent;
 import org.kecsi.dddmodules.sharedkernel.events.EventBus;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
+import org.springframework.stereotype.Component;
 
+@Component
+@EnableMongoRepositories( basePackageClasses = CustomerOrderRepository.class )
+@NoArgsConstructor
 public class CustomerOrderService implements OrderService {
 	public static final String EVENT_ORDER_READY_FOR_SHIPMENT = "OrderReadyForShipmentEvent";
 
 	private CustomerOrderRepository orderRepository;
 	private EventBus eventBus;
+
+	@Autowired
+	public CustomerOrderService( CustomerOrderRepository orderRepository, EventBus eventBus ) {
+		this.orderRepository = orderRepository;
+		this.eventBus = eventBus;
+	}
 
 	@Override
 	public void placeOrder( CustomerOrder order ) {
@@ -28,18 +41,18 @@ public class CustomerOrderService implements OrderService {
 		this.eventBus.publish( event );
 	}
 
-	@Override
-	public void setOrderRepository( CustomerOrderRepository orderRepository ) {
-		this.orderRepository = orderRepository;
-	}
+//	@Override
+//	public void setOrderRepository( CustomerOrderRepository orderRepository ) {
+//		this.orderRepository = orderRepository;
+//	}
 
 	@Override
 	public EventBus getEventBus() {
 		return this.eventBus;
 	}
 
-	@Override
-	public void setEventBus( EventBus eventBus ) {
-		this.eventBus = eventBus;
-	}
+//	@Override
+//	public void setEventBus( EventBus eventBus ) {
+//		this.eventBus = eventBus;
+//	}
 }

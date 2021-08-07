@@ -31,5 +31,5 @@ public interface ApplicationService {
 
 	EventBus getEventBus();
 
-	void setEventBus( EventBus eventBus );
+//	void setEventBus( EventBus eventBus );
 }

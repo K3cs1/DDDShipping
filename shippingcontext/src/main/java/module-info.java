@@ -4,6 +4,7 @@ import org.kecsi.dddmodules.shippingcontext.service.ShippingService;
 module org.kecsi.dddmodules.shippingcontext {
 	requires lombok;
 	requires java.annotation;
+	requires spring.core;
 	requires spring.beans;
 	requires spring.context;
 	requires spring.data.commons;
