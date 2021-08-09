@@ -1,14 +1,11 @@
-version: "3.9"
+version: "3.3"
 
 services:
   mongodb:
-    image: "mongo"
     container_name: "dddshipping_mongodb"
-    environment:
-      - PUID=1000
-      - PGID=1000
-    volumes:
-      - /home/kecskemetip/Development/mongodb/database:/data/db
+    image: "mongo"
     ports:
       - "27017:27017"
-    restart: unless-stopped
+    volumes:
+      - /home/kecskemetip/Development/mongodb/database:/data/db
+    restart: always

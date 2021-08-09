@@ -22,6 +22,9 @@ public class MongoConfiguration extends AbstractMongoClientConfiguration {
 
 //	private final List<Converter<?, ?>> converters = new ArrayList<>();
 
+	@Value( "${mongoDBConnection}" )
+	private String mongoDBConnection;
+
 	@Value( "${mongoDBName}" )
 	private String mongoDBName;
 
@@ -32,7 +35,7 @@ public class MongoConfiguration extends AbstractMongoClientConfiguration {
 
 	@Override
 	public MongoClient mongoClient() {
-		final ConnectionString connectionString = new ConnectionString( "mongodb://127.0.0.1:27017/" + mongoDBName );
+		final ConnectionString connectionString = new ConnectionString( mongoDBConnection );
 		final MongoClientSettings mongoClientSettings = MongoClientSettings.builder()
 				.applyConnectionString( connectionString )
 				.build();
