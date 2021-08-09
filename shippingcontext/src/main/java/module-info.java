@@ -15,4 +15,7 @@ module org.kecsi.dddmodules.shippingcontext {
 	exports org.kecsi.dddmodules.shippingcontext.repository;
 	provides ShippingService
 			with ParcelShippingService;
+	opens org.kecsi.dddmodules.shippingcontext.model to spring.core, spring.beans, spring.context;
+	opens org.kecsi.dddmodules.shippingcontext.repository to spring.core, spring.beans, spring.context;
+	opens org.kecsi.dddmodules.shippingcontext.service to spring.core, spring.beans, spring.context;
 }

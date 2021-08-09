@@ -9,6 +9,8 @@ module org.kecsi.dddmodules.infrastructure {
 	requires spring.context;
 	requires spring.data.commons;
 	requires spring.data.mongodb;
+	requires org.mongodb.driver.core;
+	requires org.mongodb.driver.sync.client;
 	requires transitive org.kecsi.dddmodules.sharedkernel;
 	requires transitive org.kecsi.dddmodules.ordercontext;
 	requires transitive org.kecsi.dddmodules.shippingcontext;
@@ -18,4 +20,7 @@ module org.kecsi.dddmodules.infrastructure {
 //			with InMemoryOrderStore;
 //	provides ShippingOrderRepository
 //			with InMemoryOrderStore;
+	opens org.kecsi.dddmodules.infrastructure.events to spring.core, spring.beans, spring.context;
+	opens org.kecsi.dddmodules.infrastructure.configuration to spring.core, spring.beans, spring.context;
+	opens org.kecsi.dddmodules.infrastructure.db to spring.core, spring.beans, spring.context;
 }

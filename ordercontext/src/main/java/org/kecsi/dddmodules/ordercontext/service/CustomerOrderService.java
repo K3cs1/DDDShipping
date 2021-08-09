@@ -9,11 +9,9 @@ import org.kecsi.dddmodules.ordercontext.repository.CustomerOrderRepository;
 import org.kecsi.dddmodules.sharedkernel.events.ApplicationEvent;
 import org.kecsi.dddmodules.sharedkernel.events.EventBus;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import org.springframework.stereotype.Component;
 
 @Component
-@EnableMongoRepositories( basePackageClasses = CustomerOrderRepository.class )
 @NoArgsConstructor
 public class CustomerOrderService implements OrderService {
 	public static final String EVENT_ORDER_READY_FOR_SHIPMENT = "OrderReadyForShipmentEvent";
@@ -29,7 +27,7 @@ public class CustomerOrderService implements OrderService {
 
 	@Override
 	public void placeOrder( CustomerOrder order ) {
-		this.orderRepository.saveCustomerOrder( order );
+		this.orderRepository.save( order );
 		Map<String, String> payload = new HashMap<>();
 		payload.put( "order_id", String.valueOf( order.getOrderId() ) );
 		ApplicationEvent event = new ApplicationEvent( payload ) {

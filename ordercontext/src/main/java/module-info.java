@@ -15,5 +15,7 @@ module org.kecsi.dddmodules.ordercontext {
 	exports org.kecsi.dddmodules.ordercontext.repository;
 	provides OrderService
 			with CustomerOrderService;
+	opens org.kecsi.dddmodules.ordercontext.model to spring.core, spring.beans, spring.context;
 	opens org.kecsi.dddmodules.ordercontext.repository to spring.core, spring.beans, spring.context;
+	opens org.kecsi.dddmodules.ordercontext.service to spring.core, spring.beans, spring.context;
 }
