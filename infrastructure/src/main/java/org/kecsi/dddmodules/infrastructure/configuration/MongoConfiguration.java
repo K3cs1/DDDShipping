@@ -20,8 +20,6 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 @NoArgsConstructor
 public class MongoConfiguration extends AbstractMongoClientConfiguration {
 
-//	private final List<Converter<?, ?>> converters = new ArrayList<>();
-
 	@Value( "${mongoDBConnection}" )
 	private String mongoDBConnection;
 
@@ -41,27 +39,6 @@ public class MongoConfiguration extends AbstractMongoClientConfiguration {
 				.build();
 		return MongoClients.create( mongoClientSettings );
 	}
-
-//	@Override
-//	public Collection<String> getMappingBasePackages() {
-//		return Collections.singleton( "com.baeldung" );
-//	}
-
-//	@Bean
-//	public UserCascadeSaveMongoEventListener userCascadingMongoEventListener() {
-//		return new UserCascadeSaveMongoEventListener();
-//	}
-//
-//	@Bean
-//	public CascadeSaveMongoEventListener cascadingMongoEventListener() {
-//		return new CascadeSaveMongoEventListener();
-//	}
-
-//	@Override
-//	public MongoCustomConversions customConversions() {
-//		converters.add( new UserWriterConverter() );
-//		return new MongoCustomConversions( converters );
-//	}
 
 	@Bean
 	MongoTransactionManager transactionManager( MongoDatabaseFactory dbFactory ) {

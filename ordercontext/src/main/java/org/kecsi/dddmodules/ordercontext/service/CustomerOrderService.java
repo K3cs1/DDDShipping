@@ -39,18 +39,8 @@ public class CustomerOrderService implements OrderService {
 		this.eventBus.publish( event );
 	}
 
-//	@Override
-//	public void setOrderRepository( CustomerOrderRepository orderRepository ) {
-//		this.orderRepository = orderRepository;
-//	}
-
 	@Override
 	public EventBus getEventBus() {
 		return this.eventBus;
 	}
-
-//	@Override
-//	public void setEventBus( EventBus eventBus ) {
-//		this.eventBus = eventBus;
-//	}
 }

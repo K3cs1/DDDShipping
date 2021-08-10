@@ -3,7 +3,12 @@ package org.kecsi.dddmodules.sharedkernel.events;
 import java.util.Map;
 
 public abstract class ApplicationEvent {
+
 	protected Map<String, String> payload;
+
+	public ApplicationEvent( Map<String, String> payload ) {
+		this.payload = payload;
+	}
 
 	public abstract String getType();
 
@@ -12,9 +17,5 @@ public abstract class ApplicationEvent {
 			return this.payload.get( key );
 		}
 		return "";
-	}
-
-	public ApplicationEvent( Map<String, String> payload ) {
-		this.payload = payload;
 	}
 }

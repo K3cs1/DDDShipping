@@ -1,9 +1,9 @@
-###### Domain Driven Design Shipping example
+###### Domain Driven Design Shipping application
 
 **Required: Java 11+**
 
 `./gradlew clean build`  
-`./gradlew mainapp:run `
+`./gradlew mainapp:run`
 
 **MongoDB Docker setup**
 
@@ -13,7 +13,7 @@ docker-compose up -d
 docker exec -it dddshipping_mongodb bash
 ````
 
-*Inside the MongoDB Docker container*
+*Inside the MongoDB Docker container, setup a user for the application*
 
 ````
 mongo

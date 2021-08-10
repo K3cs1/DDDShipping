@@ -16,11 +16,6 @@ module org.kecsi.dddmodules.infrastructure {
 	requires transitive org.kecsi.dddmodules.shippingcontext;
 	provides EventBus
 			with SimpleEventBus;
-//	provides CustomerOrderRepository
-//			with InMemoryOrderStore;
-//	provides ShippingOrderRepository
-//			with InMemoryOrderStore;
 	opens org.kecsi.dddmodules.infrastructure.events to spring.core, spring.beans, spring.context;
 	opens org.kecsi.dddmodules.infrastructure.configuration to spring.core, spring.beans, spring.context;
-	opens org.kecsi.dddmodules.infrastructure.db to spring.core, spring.beans, spring.context;
 }

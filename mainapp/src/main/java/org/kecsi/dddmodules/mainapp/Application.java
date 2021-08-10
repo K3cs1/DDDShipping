@@ -1,9 +1,8 @@
 package org.kecsi.dddmodules.mainapp;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import javax.annotation.PostConstruct;
 
 import org.kecsi.dddmodules.ordercontext.model.CustomerOrder;
 import org.kecsi.dddmodules.ordercontext.model.OrderItem;
@@ -19,9 +18,6 @@ public class Application implements CommandLineRunner {
 
 	private OrderService orderService;
 	private ShippingService shippingService;
-//	private CustomerOrderRepository customerOrderRepository;
-//	private ShippingOrderRepository shippingOrderRepository;
-//	private EventBus eventBus;
 
 	@Autowired
 	public Application( OrderService orderService, ShippingService shippingService ) {
@@ -35,15 +31,12 @@ public class Application implements CommandLineRunner {
 
 	@Override
 	public void run( String... args ) throws Exception {
-		Map<Class<?>, Object> container = createContainer();
-		//OrderService orderService = (OrderService) container.get( OrderService.class );
-		//ShippingService shippingService = (ShippingService) container.get( ShippingService.class );
 		shippingService.listenToOrderEvents();
 
 		CustomerOrder customerOrder = new CustomerOrder();
 		int orderId = 1;
 		customerOrder.setOrderId( orderId );
-		List<OrderItem> orderItems = new ArrayList<OrderItem>();
+		List<OrderItem> orderItems = new ArrayList<>();
 		orderItems.add( new OrderItem( 1, 2, 3, 1 ) );
 		orderItems.add( new OrderItem( 2, 1, 1, 1 ) );
 		orderItems.add( new OrderItem( 3, 4, 11, 21 ) );
@@ -57,17 +50,8 @@ public class Application implements CommandLineRunner {
 		}
 	}
 
-	private Map<Class<?>, Object> createContainer() {
-		//EventBus eventBus = ServiceLoader.load( EventBus.class ).findFirst().get();
-		//ShippingService shippingService = ServiceLoader.load( ShippingService.class ).findFirst().get();
-		//shippingService.setEventBus( eventBus );
-		//shippingService.setOrderRepository( shippingOrderRepository );
-		//OrderService orderService = ServiceLoader.load( OrderService.class ).findFirst().get();
-		//orderService.setEventBus( eventBus );
-		//orderService.setOrderRepository( customerOrderRepository );
-		HashMap<Class<?>, Object> container = new HashMap<>();
-		container.put( OrderService.class, orderService );
-		container.put( ShippingService.class, shippingService );
-		return container;
+	@PostConstruct
+	public void initShippableOrder() {
+		shippingService.initShippableOrder();
 	}
 }
