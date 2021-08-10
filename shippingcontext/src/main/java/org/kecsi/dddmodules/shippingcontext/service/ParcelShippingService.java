@@ -18,19 +18,19 @@ import org.springframework.stereotype.Component;
 @NoArgsConstructor
 public class ParcelShippingService implements ShippingService {
 	public static final String EVENT_ORDER_READY_FOR_SHIPMENT = "OrderReadyForShipmentEvent";
-	private ShippingOrderRepository orderRepository;
+	private ShippingOrderRepository shippingOrderRepository;
 	private EventBus eventBus;
 	private Map<Integer, Parcel> shippedParcels = new HashMap<>();
 
 	@Autowired
-	public ParcelShippingService( ShippingOrderRepository orderRepository, EventBus eventBus ) {
-		this.orderRepository = orderRepository;
+	public ParcelShippingService( ShippingOrderRepository shippingOrderRepository, EventBus eventBus ) {
+		this.shippingOrderRepository = shippingOrderRepository;
 		this.eventBus = eventBus;
 	}
 
 	@Override
 	public void shipOrder( int orderId ) {
-		Optional<ShippableOrder> order = this.orderRepository.findShippableOrderByOrderId( orderId );
+		Optional<ShippableOrder> order = this.shippingOrderRepository.findShippableOrderByOrderId( orderId );
 		order.ifPresent( completedOrder -> {
 			Parcel parcel = new Parcel( completedOrder.getOrderId(), completedOrder.getAddress(), completedOrder.getPackageItems() );
 			if ( parcel.isTaxable() ) {
@@ -56,9 +56,9 @@ public class ParcelShippingService implements ShippingService {
 		return Optional.ofNullable( this.shippedParcels.get( orderId ) );
 	}
 
-	public void setOrderRepository( ShippingOrderRepository orderRepository ) {
-		this.orderRepository = orderRepository;
-	}
+//	public void setOrderRepository( ShippingOrderRepository orderRepository ) {
+//		this.orderRepository = orderRepository;
+//	}
 
 	@Override
 	public EventBus getEventBus() {

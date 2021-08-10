@@ -15,7 +15,7 @@ import org.springframework.data.mongodb.config.AbstractMongoClientConfiguration;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
 @Configuration
-@PropertySource( { "local.properties" } )
+@PropertySource( { "infrastructure.properties" } )
 @EnableMongoRepositories( basePackages = { "org.kecsi.dddmodules.ordercontext.repository", "org.kecsi.dddmodules.shippingcontext.repository" } )
 @NoArgsConstructor
 public class MongoConfiguration extends AbstractMongoClientConfiguration {
