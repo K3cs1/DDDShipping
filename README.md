@@ -3,7 +3,7 @@
 **Required: Java 11+**
 
 `./gradlew clean build`  
-`./gradlew mainapp:run`
+`./gradlew mainapp:bootRun`
 
 **MongoDB Docker setup**
 

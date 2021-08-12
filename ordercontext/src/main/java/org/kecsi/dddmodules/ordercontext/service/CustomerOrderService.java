@@ -1,6 +1,7 @@
 package org.kecsi.dddmodules.ordercontext.service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import lombok.NoArgsConstructor;
@@ -37,6 +38,11 @@ public class CustomerOrderService implements OrderService {
 			}
 		};
 		this.eventBus.publish( event );
+	}
+
+	@Override
+	public List<CustomerOrder> getCustomerOrders() {
+		return this.orderRepository.findAll();
 	}
 
 	@Override

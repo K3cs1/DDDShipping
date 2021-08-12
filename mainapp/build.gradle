@@ -8,7 +8,8 @@ plugins {
 
 group 'org.kecsi.dddmodules'
 version '1.0-SNAPSHOT'
-sourceCompatibility = '11'
+sourceCompatibility = 11
+targetCompatibility = 11
 
 repositories {
     mavenCentral()
@@ -26,12 +27,26 @@ dependencies {
 
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    //developmentOnly 'org.springframework.boot:spring-boot-devtools'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
 application {
     mainModule = 'org.kecsi.dddmodules.mainapp'
     mainClass = 'org.kecsi.dddmodules.mainapp.Application'
+}
+
+springBoot {
+    mainClass = 'org.kecsi.dddmodules.mainapp.Application'
+}
+
+bootJar {
+    enabled = true
+}
+
+jar {
+    enabled = true
 }
 
 test {

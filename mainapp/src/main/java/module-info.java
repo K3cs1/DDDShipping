@@ -12,6 +12,7 @@ module org.kecsi.dddmodules.mainapp {
 	requires spring.core;
 	requires spring.beans;
 	requires spring.context;
+	requires spring.web;
 	uses EventBus;
 	uses OrderService;
 	uses CustomerOrderRepository;
@@ -19,4 +20,5 @@ module org.kecsi.dddmodules.mainapp {
 	uses ShippingService;
 	requires transitive org.kecsi.dddmodules.infrastructure;
 	opens org.kecsi.dddmodules.mainapp to spring.core, spring.beans, spring.context;
+	opens org.kecsi.dddmodules.controller to spring.core, spring.beans, spring.context;
 }
