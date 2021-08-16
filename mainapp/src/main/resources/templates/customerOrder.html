@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Add Customer Order</title>
+    <title th:text="#{shipping.add}">Add customer order</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
@@ -12,69 +12,78 @@
 </head>
 <body>
 <div class="container">
-    <h2>New Customer Order</h2>
+    <h2 th:text="#{shipping.new.customer.order}">New customer order</h2>
     <div class="row">
         <div class="col-md-9">
             <form action="#" th:action="@{/shippingManagement}" th:object="${customerOrder}" method="post">
+                <!--
                 <ul th:if="${#fields.hasErrors('*')}" class="errorlist">
                     <li th:each="err : ${#fields.errors('*')}" th:text="${err}">Input is incorrect</li>
                 </ul>
+                -->
                 <div class="row">
                     <div class="form-group col">
-                        <label for="paymentMethod" class="col-form-label">Payment Method</label>
-                        <input type="text" th:field="*{paymentMethod}" class="form-control" id="paymentMethod" placeholder="Payment Method">
+                        <label for="paymentMethod" class="col-form-label" th:text="#{shipping.payment.method}">Payment method</label>
+                        <input type="text" th:field="*{paymentMethod}" class="form-control" id="paymentMethod" th:placeholder="#{shipping.payment.method}">
                         <span th:if="${#fields.hasErrors('paymentMethod')}" th:errors="*{paymentMethod}" class="text-danger"></span>
                     </div>
                     <div class="form-group col">
-                        <label for="address" class="col-form-label">Address</label>
-                        <input type="text" th:field="*{address}" class="form-control" id="address" placeholder="Address">
+                        <label for="address" class="col-form-label" th:text="#{shipping.address}">Address</label>
+                        <input type="text" th:field="*{address}" class="form-control" id="address" th:placeholder="#{shipping.address}">
                         <span th:if="${#fields.hasErrors('address')}" th:errors="*{address}" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="row" th:each="row,rowStat : *{orderItems}">
+                    <!--
                     <div class="form-group col">
-                        <label for="productId" class="col-form-label">Product Id</label>
-                        <input type="text" th:field="*{orderItems[__${rowStat.index}__].productId}" class="form-control" id="productId"
-                               placeholder="PaymentMethod" ,
+                        <label th:for="@{|#productId-${rowStat.count}|}" class="col-form-label" th:text="#{shipping.orderItems.product.id}">Product ID</label>
+                        <input type="text" th:field="*{orderItems[__${rowStat.index}__].productId}" class="form-control"
+                               th:id="@{|#productId-${rowStat.count}|}"
+                               th:placeholder="#{shipping.orderItems.product.id}"
+                               th:errorclass="fieldError">
+                         <span th:if="${#fields.hasErrors('productId')}" th:errors="*{productId}" class="text-danger"></span>
+                    </div>
+                    -->
+                    <div class="form-group col">
+                        <label th:for="@{|#quantity-${rowStat.index}|}" class="col-form-label" th:text="#{shipping.orderItems.quantity}">Quantity</label>
+                        <input type="text" th:field="*{orderItems[__${rowStat.index}__].quantity}" class="form-control"
+                               th:id="@{|#quantity-${rowStat.index}|}"
+                               th:placeholder="#{shipping.orderItems.quantity}"
                                th:errorclass="fieldError">
                         <!-- <span th:if="${#fields.hasErrors('productId')}" th:errors="*{productId}" class="text-danger"></span> -->
                     </div>
                     <div class="form-group col">
-                        <label for="quantity" class="col-form-label">Quantity</label>
-                        <input type="text" th:field="*{orderItems[__${rowStat.index}__].quantity}" class="form-control" id="quantity" placeholder="Quantity" ,
+                        <label th:for="@{|#unitPrice-${rowStat.index}|}" class="col-form-label" th:text="#{shipping.orderItems.unit.price}">Unit price</label>
+                        <input type="text" th:field="*{orderItems[__${rowStat.index}__].unitPrice}" class="form-control"
+                               th:id="@{|#unitPrice-${rowStat.index}|}"
+                               th:placeholder="#{shipping.orderItems.unit.price}"
                                th:errorclass="fieldError">
                         <!-- <span th:if="${#fields.hasErrors('productId')}" th:errors="*{productId}" class="text-danger"></span> -->
                     </div>
                     <div class="form-group col">
-                        <label for="unitPrice" class="col-form-label">Unit Price</label>
-                        <input type="text" th:field="*{orderItems[__${rowStat.index}__].unitPrice}" class="form-control" id="unitPrice" placeholder="Unit Price"
-                               ,
+                        <label th:for="@{|#unitWeight-${rowStat.index}|}" class="col-form-label" th:text="#{shipping.orderItems.unit.weight}">Unit
+                            weight</label>
+                        <input type="text" th:field="*{orderItems[__${rowStat.index}__].unitWeight}" class="form-control"
+                               th:id="@{|#unitWeight-${rowStat.index}|}"
+                               th:placeholder="#{shipping.orderItems.unit.weight}"
                                th:errorclass="fieldError">
-                        <!-- <span th:if="${#fields.hasErrors('productId')}" th:errors="*{productId}" class="text-danger"></span> -->
-                    </div>
-                    <div class="form-group col">
-                        <label for="unitWeight" class="col-form-label">Unit Weight</label>
-                        <input type="text" th:field="*{orderItems[__${rowStat.index}__].unitWeight}" class="form-control" id="unitWeight"
-                               placeholder="Unit Weight"
-                               th:errorclass="fieldError">
-                        <!-- <span th:if="${#fields.hasErrors('productId')}" th:errors="*{productId}" class="text-danger"></span> -->
+                        <!-- <span th:if="${#fields.hasErrors('unitWeight')}" th:errors="*{unitWeight}" class="text-danger"></span> -->
                     </div>
                     <div class="form-group col">
                         <button type="submit" class="btn btn-primary" name="removeOrderItem" th:value="${rowStat.index}"
-                                th:text="#{customerOrder.orderItems.remove}">Remove Order
-                            Item
+                                th:text="#{shipping.orderItems.remove}">Remove order item
                         </button>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-3 mt-5">
-                        <button type="submit" class="btn btn-primary" name="addOrderItem" th:text="#{customerOrder.orderItems.add}">Add Order Item</button>
+                        <button type="submit" class="btn btn-primary" name="addOrderItem" th:text="#{shipping.orderItems.add}">Add order item</button>
                     </div>
                     <div class="col-md-3 mt-5">
-                        <button type="submit" class="btn btn-primary" name="addCustomerOrder" th:text="#{customerOrder.add}">Add Customer Order</button>
+                        <button type="submit" class="btn btn-primary" name="addCustomerOrder" th:text="#{shipping.add}">Add customer order</button>
                     </div>
                     <div class="col-md-3 mt-5">
-                        <p><a href="/" class="btn btn-primary" th:text="#{customerOrder.back}">Back</a></p>
+                        <p><a href="/" class="btn btn-primary" th:text="#{shipping.back}">Back</a></p>
                     </div>
                 </div>
             </form>

@@ -2,14 +2,16 @@ package org.kecsi.dddmodules.shippingcontext.model;
 
 import java.util.List;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.data.annotation.Id;
 
 @Setter
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 public class ShippableOrder {
 	@Id
 	private int orderId;
