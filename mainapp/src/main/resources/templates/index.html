@@ -18,7 +18,6 @@
         <table class="table table-stripped table-responsive-md">
             <thead>
             <tr>
-                <!-- <th th:text="#{shipping.id}">ID</th> -->
                 <th th:text="#{shipping.payment.method}">Payment method</th>
                 <th th:text="#{shipping.address}">Address</th>
                 <th>&nbsp;</th>
@@ -27,7 +26,6 @@
             </thead>
             <tbody>
             <tr th:each="order : ${customerOrders}">
-                <!-- <td th:text="${order.orderId}"></td> -->
                 <td th:text="${order.paymentMethod}"></td>
                 <td th:text="${order.address}"></td>
                 <td><a th:href="@{/showShipping/{id}(id=${order.orderId})}" class="btn btn-primary" th:text="#{shipping.show.shippings}">Show shipping</a>

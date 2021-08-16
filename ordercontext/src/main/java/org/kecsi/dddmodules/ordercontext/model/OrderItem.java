@@ -11,8 +11,9 @@ import org.springframework.data.annotation.Id;
 @AllArgsConstructor
 @NoArgsConstructor
 public class OrderItem {
+
 	@Id
-	private int productId;
+	private long productId;
 	private int quantity;
 	private float unitPrice;
 	private float unitWeight;
