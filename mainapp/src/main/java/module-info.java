@@ -6,9 +6,10 @@ import org.kecsi.dddmodules.shippingcontext.service.ShippingService;
 
 module org.kecsi.dddmodules.mainapp {
 	requires lombok;
+	requires org.apache.tomcat.embed.core;
+	requires java.annotation;
 	requires spring.boot;
 	requires spring.boot.autoconfigure;
-	requires java.annotation;
 	requires spring.core;
 	requires spring.beans;
 	requires spring.context;

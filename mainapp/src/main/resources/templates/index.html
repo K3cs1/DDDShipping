@@ -2,6 +2,8 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Domain Driven Design Shipping Application</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
@@ -24,18 +26,17 @@
             </tr>
             </thead>
             <tbody>
-            <th th:each="order : ${customerOrders}">
-            <td th:text="${order.orderId}"></td>
-            <td th:text="${order.paymentMethod}"></td>
-            <td th:text="${order.address}"></td>
-            <td><a th:href="@{/showShipping/{id}(id=${order.orderId})}" class="btn btn-primary">Shipping</a></td>
-            <td><a th:href="@{/deleteCustomerOrder/{id}(id=${order.orderId})}" class="btn btn-primary">Delete</a></td>
-            </th>
+            <tr th:each="order : ${customerOrders}">
+                <td th:text="${order.orderId}"></td>
+                <td th:text="${order.paymentMethod}"></td>
+                <td th:text="${order.address}"></td>
+                <td><a th:href="@{/showShipping/{id}(id=${order.orderId})}" class="btn btn-primary">Shipping</a></td>
+                <td><a th:href="@{/deleteCustomerOrder/{id}(id=${order.orderId})}" class="btn btn-primary">Delete</a></td>
+            </tr>
             </tbody>
         </table>
     </div>
     <p><a href="/addCustomerOrder" class="btn btn-primary">Add Customer Order</a></p>
-    <p><a href="/index" class="btn btn-primary">Back</a></p>
 </div>
 </body>
 </html>

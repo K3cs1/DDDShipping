@@ -1,11 +1,15 @@
 package org.kecsi.dddmodules.controller;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.kecsi.dddmodules.ordercontext.model.CustomerOrder;
+import org.kecsi.dddmodules.ordercontext.model.OrderItem;
 import org.kecsi.dddmodules.ordercontext.service.OrderService;
 import org.kecsi.dddmodules.shippingcontext.service.ShippingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -26,16 +30,29 @@ public class ShippingController {
 		return "customerOrder";
 	}
 
-	@PostMapping( "/addCustomerOrder" )
-	public String saveCustomerOrder( CustomerOrder customerOrder ) {
+	@PostMapping( value = "/shippingManagement", params = { "addCustomerOrder" } )
+	public String saveCustomerOrder( CustomerOrder customerOrder, BindingResult errors, Model model ) {
 		orderService.placeOrder( customerOrder );
-		return "redirect:/index";
+		return "redirect:/";
 	}
 
-	@GetMapping( "/index" )
+	@GetMapping( { "/", "/shippingManagement" } )
 	public String showCustomerOrders( Model model ) {
 		model.addAttribute( "customerOrders", orderService.getCustomerOrders() );
 		return "index";
+	}
+
+	@PostMapping( value = "/shippingManagement", params = { "addOrderItem" } )
+	public String addOrderItem( CustomerOrder customerOrder ) {
+		customerOrder.getOrderItems().add( new OrderItem() );
+		return "customerOrder";
+	}
+
+	@PostMapping( value = "/shippingManagement", params = { "removeOrderItem" } )
+	public String removeOrderItems( CustomerOrder customerOrder, BindingResult bindingResult, final HttpServletRequest request ) {
+		Integer orderItemRow = Integer.valueOf( request.getParameter( "removeOrderItem" ) );
+		customerOrder.getOrderItems().remove( orderItemRow.intValue() );
+		return "customerOrder";
 	}
 
 }
