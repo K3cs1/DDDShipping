@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.kecsi.dddmodules.ordercontext.model.CustomerOrder;
 import org.kecsi.dddmodules.ordercontext.model.OrderItem;
+import org.kecsi.dddmodules.ordercontext.model.PaymentMethodType;
 import org.kecsi.dddmodules.ordercontext.service.OrderService;
 import org.kecsi.dddmodules.shippingcontext.model.ProductType;
 import org.kecsi.dddmodules.shippingcontext.service.ShippingService;
@@ -31,6 +32,11 @@ public class ShippingController {
 	@ModelAttribute( "allProducts" )
 	public List<ProductType> populateProducts() {
 		return ProductType.ALL_PRODUCTS;
+	}
+
+	@ModelAttribute( "allPaymentMethods" )
+	public List<PaymentMethodType> populatePaymentMethods() {
+		return PaymentMethodType.ALL_PAYMENT_METHODS;
 	}
 
 	@GetMapping( "/addCustomerOrder" )

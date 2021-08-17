@@ -26,7 +26,7 @@
             </thead>
             <tbody>
             <tr th:each="order : ${customerOrders}">
-                <td th:text="${order.paymentMethod}"></td>
+                <td th:text="#{${'shipping.payment.method.' + order.paymentMethod}}"></td>
                 <td th:text="${order.address}"></td>
                 <td><a th:href="@{/showShipping/{id}(id=${order.orderId})}" class="btn btn-primary" th:text="#{shipping.show.shippings}">Show shipping</a>
                 </td>
