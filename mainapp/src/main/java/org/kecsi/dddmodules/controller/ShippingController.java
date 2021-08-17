@@ -3,6 +3,7 @@ package org.kecsi.dddmodules.controller;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
+import org.kecsi.dddmodules.infrastructure.service.AdapterService;
 import org.kecsi.dddmodules.ordercontext.model.CustomerOrder;
 import org.kecsi.dddmodules.ordercontext.model.OrderItem;
 import org.kecsi.dddmodules.ordercontext.model.PaymentMethodType;
@@ -13,20 +14,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class ShippingController {
 
 	private OrderService orderService;
 	private ShippingService shippingService;
+	private AdapterService adapterService;
 
 	@Autowired
-	public ShippingController( OrderService orderService, ShippingService shippingService ) {
+	public ShippingController( OrderService orderService, ShippingService shippingService, AdapterService adapterService ) {
 		this.orderService = orderService;
 		this.shippingService = shippingService;
+		this.adapterService = adapterService;
 	}
 
 	@ModelAttribute( "allProducts" )
@@ -47,6 +48,7 @@ public class ShippingController {
 	@PostMapping( value = "/shippingManagement", params = { "addCustomerOrder" } )
 	public String saveCustomerOrder( CustomerOrder customerOrder, BindingResult errors, Model model ) {
 		orderService.placeOrder( customerOrder );
+		shippingService.shipOrder( adapterService.customerToShippableOrder( customerOrder ) );
 		return "redirect:/";
 	}
 
@@ -67,6 +69,13 @@ public class ShippingController {
 		Integer orderItemRow = Integer.valueOf( request.getParameter( "removeOrderItem" ) );
 		customerOrder.getOrderItems().remove( orderItemRow.intValue() );
 		return "customerOrder";
+	}
+
+	@DeleteMapping( "/deleteCustomerOrder/{orderId}" )
+	public String deleteCustomerOrder( @PathVariable( "orderId" ) long orderId ) {
+		orderService.deleteCustomerOrder( orderId );
+		shippingService.deleteSippableOrderByOrderId( orderId );
+		return "index";
 	}
 
 }

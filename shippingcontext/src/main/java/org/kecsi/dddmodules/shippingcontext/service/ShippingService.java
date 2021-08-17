@@ -9,11 +9,9 @@ import org.springframework.stereotype.Service;
 
 @Service
 public interface ShippingService extends ApplicationService {
-	void shipOrder( Optional<ShippableOrder> shippableOrder );
+	void shipOrder( ShippableOrder shippableOrder );
 
-	void listenToOrderEvents();
+	Optional<Parcel> getParcelByOrderId( long orderId );
 
-	Optional<Parcel> getParcelByOrderId( int orderId );
-
-	void initShippableOrder();
+	void deleteSippableOrderByOrderId( long orderId );
 }

@@ -1,3 +1,4 @@
+import org.kecsi.dddmodules.infrastructure.service.AdapterService;
 import org.kecsi.dddmodules.ordercontext.repository.CustomerOrderRepository;
 import org.kecsi.dddmodules.ordercontext.service.OrderService;
 import org.kecsi.dddmodules.sharedkernel.events.EventBus;
@@ -19,6 +20,7 @@ module org.kecsi.dddmodules.mainapp {
 	uses CustomerOrderRepository;
 	uses ShippingOrderRepository;
 	uses ShippingService;
+	uses AdapterService;
 	requires transitive org.kecsi.dddmodules.infrastructure;
 	opens org.kecsi.dddmodules.mainapp to spring.core, spring.beans, spring.context;
 	opens org.kecsi.dddmodules.controller to spring.core, spring.beans, spring.context;

@@ -15,7 +15,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Document( collection = "customerOrder" )
+@Document( collection = "customer_order" )
 public class CustomerOrder {
 
 	@Transient

@@ -1,4 +1,6 @@
 import org.kecsi.dddmodules.infrastructure.events.SimpleEventBus;
+import org.kecsi.dddmodules.infrastructure.service.AdapterService;
+import org.kecsi.dddmodules.infrastructure.service.ShippableOrderAdapterService;
 import org.kecsi.dddmodules.sharedkernel.events.EventBus;
 
 module org.kecsi.dddmodules.infrastructure {
@@ -16,6 +18,10 @@ module org.kecsi.dddmodules.infrastructure {
 	requires transitive org.kecsi.dddmodules.shippingcontext;
 	provides EventBus
 			with SimpleEventBus;
+	provides AdapterService
+			with ShippableOrderAdapterService;
 	opens org.kecsi.dddmodules.infrastructure.events to spring.core, spring.beans, spring.context;
 	opens org.kecsi.dddmodules.infrastructure.configuration to spring.core, spring.beans, spring.context;
+	opens org.kecsi.dddmodules.infrastructure.service to spring.core, spring.beans, spring.context;
+	exports org.kecsi.dddmodules.infrastructure.service;
 }

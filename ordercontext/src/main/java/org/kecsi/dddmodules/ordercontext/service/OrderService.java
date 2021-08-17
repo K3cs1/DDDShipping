@@ -11,4 +11,6 @@ public interface OrderService extends ApplicationService {
 	void placeOrder( CustomerOrder order );
 
 	List<CustomerOrder> getCustomerOrders();
+
+	void deleteCustomerOrder( long orderId );
 }

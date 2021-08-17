@@ -8,5 +8,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ShippingOrderRepository extends MongoRepository<ShippableOrder, String> {
-	Optional<ShippableOrder> findShippableOrderByOrderId( int orderId );
+	Optional<ShippableOrder> findShippableOrderByOrderId( long orderId );
+
+	void deleteShippableOrderByOrderId( long orderId );
 }

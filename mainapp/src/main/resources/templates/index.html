@@ -26,12 +26,21 @@
             </thead>
             <tbody>
             <tr th:each="order : ${customerOrders}">
-                <td th:text="#{${'shipping.payment.method.' + order.paymentMethod}}"></td>
-                <td th:text="${order.address}"></td>
-                <td><a th:href="@{/showShipping/{id}(id=${order.orderId})}" class="btn btn-primary" th:text="#{shipping.show.shippings}">Show shipping</a>
-                </td>
-                <td><a th:href="@{/deleteCustomerOrder/{id}(id=${order.orderId})}" class="btn btn-primary" th:text="#{shipping.delete.customer.order}">Delete
-                    customer order</a></td>
+                <form action="#" th:action="@{'/deleteCustomerOrder/{orderId}'(orderId=${order.orderId})}" th:method="delete">
+                    <td th:text="#{${'shipping.payment.method.' + order.paymentMethod}}"></td>
+                    <td th:text="${order.address}"></td>
+                    <td><a th:href="@{/showShippings/{id}(id=${order.orderId})}" class="btn btn-primary" th:text="#{shipping.show.shippings}">Show shippings</a>
+                    </td>
+                    <!--
+                    <td><a th:href="@{/deleteCustomerOrder/{id}(id=${order.orderId})}" class="btn btn-primary" th:text="#{shipping.delete.customer.order}">Delete
+                        customer order</a></td>
+                    -->
+                    <td>
+                        <input type="hidden" name="orderId" th:value="${order.orderId}">
+                        <button type="submit" class="btn btn-danger" name="deleteOrder" th:text="#{shipping.delete.customer.order}">Delete customer order
+                        </button>
+                    </td>
+                </form>
             </tr>
             </tbody>
         </table>
