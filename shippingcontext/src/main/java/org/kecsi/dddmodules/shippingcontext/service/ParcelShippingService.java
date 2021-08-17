@@ -22,7 +22,7 @@ public class ParcelShippingService implements ShippingService {
 	public static final String EVENT_ORDER_READY_FOR_SHIPMENT = "OrderReadyForShipmentEvent";
 	private ShippingOrderRepository shippingOrderRepository;
 	private EventBus eventBus;
-	private Map<Integer, Parcel> shippedParcels = new HashMap<>();
+	private Map<Long, Parcel> shippedParcels = new HashMap<>();
 
 	@Autowired
 	public ParcelShippingService( ShippingOrderRepository shippingOrderRepository, EventBus eventBus ) {

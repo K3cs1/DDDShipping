@@ -14,12 +14,12 @@ import org.springframework.data.annotation.Id;
 @NoArgsConstructor
 public class Parcel {
 	@Id
-	private int orderId;
+	private long orderId;
 	private String address;
 	private String trackingId;
 	private List<PackageItem> packageItems;
 
-	public Parcel( int orderId, String address, List<PackageItem> packageItems ) {
+	public Parcel( long orderId, String address, List<PackageItem> packageItems ) {
 		this.orderId = orderId;
 		this.address = address;
 		this.packageItems = packageItems;

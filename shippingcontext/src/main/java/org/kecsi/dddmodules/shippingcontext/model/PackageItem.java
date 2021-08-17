@@ -12,7 +12,7 @@ import org.springframework.data.annotation.Id;
 @NoArgsConstructor
 public class PackageItem {
 	@Id
-	private int productId;
+	private long productId;
 	private float weight;
 	private float estimatedValue;
 }

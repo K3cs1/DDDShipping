@@ -1,16 +1,19 @@
 package org.kecsi.dddmodules.controller;
 
+import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.kecsi.dddmodules.ordercontext.model.CustomerOrder;
 import org.kecsi.dddmodules.ordercontext.model.OrderItem;
 import org.kecsi.dddmodules.ordercontext.service.OrderService;
+import org.kecsi.dddmodules.shippingcontext.model.ProductType;
 import org.kecsi.dddmodules.shippingcontext.service.ShippingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
@@ -23,6 +26,11 @@ public class ShippingController {
 	public ShippingController( OrderService orderService, ShippingService shippingService ) {
 		this.orderService = orderService;
 		this.shippingService = shippingService;
+	}
+
+	@ModelAttribute( "allProducts" )
+	public List<ProductType> populateProducts() {
+		return ProductType.ALL_PRODUCTS;
 	}
 
 	@GetMapping( "/addCustomerOrder" )

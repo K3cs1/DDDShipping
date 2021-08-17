@@ -34,8 +34,15 @@
                     </div>
                 </div>
                 <div class="row" th:each="row,rowStat : *{orderItems}">
-                    <input type="hidden" th:id="@{|productId-${rowStat.index}|}" th:value="${rowStat.index}"
-                           th:name="orderItems[__${rowStat.index}__].productId"/>
+                    <div class="form-group col">
+                        <label th:for="*{orderItems[__${rowStat.index}__].productId}" class="col-form-label"
+                               th:text="#{shipping.orderItems.products}">Products</label>
+                        <select th:field="*{orderItems[__${rowStat.index}__].productId}" class="form-select">
+                            <option th:each="product : ${allProducts}" th:value="${product.productId}"
+                                    th:text="#{${'shipping.product.' + product.productName}}">Product
+                            </option>
+                        </select>
+                    </div>
                     <div class="form-group col">
                         <label th:for="@{|quantity-${rowStat.index}|}" class="col-form-label" th:text="#{shipping.orderItems.quantity}">Quantity</label>
                         <input type="text" th:field="*{orderItems[__${rowStat.index}__].quantity}" class="form-control"

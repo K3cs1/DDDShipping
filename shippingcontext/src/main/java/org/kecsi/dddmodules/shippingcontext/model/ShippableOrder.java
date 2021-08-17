@@ -14,7 +14,7 @@ import org.springframework.data.annotation.Id;
 @NoArgsConstructor
 public class ShippableOrder {
 	@Id
-	private int orderId;
+	private long orderId;
 	private String address;
 	private List<PackageItem> packageItems;
 }
