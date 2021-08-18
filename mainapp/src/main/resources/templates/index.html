@@ -23,23 +23,62 @@
                 <form action="#" th:action="@{'/deleteCustomerOrder/{orderId}'(orderId=${order.orderId})}" th:method="delete">
                     <td th:text="#{${'shipping.payment.method.' + order.paymentMethod}}"></td>
                     <td th:text="${order.address}"></td>
-                    <td><a th:href="@{/showShippings/{id}(id=${order.orderId})}" class="btn btn-primary" th:text="#{shipping.show.shippings}">Show shippings</a>
+                    <td>
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                th:attr="data-bs-target=@{|#shippingsModal-${order.orderId}|}, data-id=${order.orderId}"
+                                th:text="#{shipping.show.shippings}">Show shippings
+                        </button>
                     </td>
-                    <!--
-                    <td><a th:href="@{/deleteCustomerOrder/{id}(id=${order.orderId})}" class="btn btn-primary" th:text="#{shipping.delete.customer.order}">Delete
-                        customer order</a></td>
-                    -->
                     <td>
                         <input type="hidden" name="orderId" th:value="${order.orderId}">
                         <button type="submit" class="btn btn-danger" name="deleteOrder" th:text="#{shipping.delete.customer.order}">Delete customer order
                         </button>
                     </td>
                 </form>
+                <div class="modal fade" th:id="@{|shippingsModal-${order.orderId}|}" tabindex="-1" aria-labelledby="shippingsModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" th:text="${order.orderId}">Modal title</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <p>Modal body text goes here.</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </tr>
             </tbody>
         </table>
     </div>
     <p><a href="/addCustomerOrder" class="btn btn-primary" th:text="#{shipping.add.customer.order}">Add customer order</a></p>
 </div>
+<script>
+    const url = 'http://localhost:8080/showShippings';
+    let modals = document.querySelectorAll('.modal');
+    modals.forEach(modal => {
+        modal.addEventListener('show.bs.modal', (event) => {
+            const showModalButton = event.relatedTarget;
+            const orderId = showModalButton.getAttribute('data-id');
+            fetch(
+                url,
+                {
+                    headers: {"Content-Type": "application/json"},
+                    body: orderId,
+                    method: "POST"
+                }
+            ).then(data => data.json())
+                .then((json) => {
+                    const response = JSON.stringify(json)
+                    console.log(response);
+                });
+        }, false);
+    });
+
+</script>
 </body>
 </html>

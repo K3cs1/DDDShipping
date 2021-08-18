@@ -9,9 +9,11 @@ import org.kecsi.dddmodules.ordercontext.model.CustomerOrder;
 import org.kecsi.dddmodules.ordercontext.model.OrderItem;
 import org.kecsi.dddmodules.ordercontext.model.PaymentMethodType;
 import org.kecsi.dddmodules.ordercontext.service.OrderService;
+import org.kecsi.dddmodules.shippingcontext.model.Parcel;
 import org.kecsi.dddmodules.shippingcontext.model.ProductType;
 import org.kecsi.dddmodules.shippingcontext.service.ShippingService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -82,10 +84,16 @@ public class ShippingController {
 	}
 
 	@DeleteMapping( "/deleteCustomerOrder/{orderId}" )
-	public String deleteCustomerOrder( @PathVariable( value = "orderId", required = true ) long orderId ) {
+	public String deleteCustomerOrder( @PathVariable( value = "orderId" ) long orderId ) {
 		orderService.deleteCustomerOrder( orderId );
 		shippingService.deleteSippableOrderByOrderId( orderId );
 		return "redirect:/";
+	}
+
+	@PostMapping( value = "/showShippings", produces = MediaType.APPLICATION_JSON_VALUE )
+	@ResponseBody
+	public Parcel showShippings( @RequestBody long orderId ) {
+		return shippingService.getParcelByOrderId( orderId ).get();
 	}
 
 }
