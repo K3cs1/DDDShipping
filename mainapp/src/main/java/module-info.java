@@ -9,12 +9,14 @@ module org.kecsi.dddmodules.mainapp {
 	requires lombok;
 	requires org.apache.tomcat.embed.core;
 	requires java.annotation;
+	requires java.validation;
 	requires spring.boot;
 	requires spring.boot.autoconfigure;
 	requires spring.core;
 	requires spring.beans;
 	requires spring.context;
 	requires spring.web;
+	requires spring.boot.starter.validation;
 	uses EventBus;
 	uses OrderService;
 	uses CustomerOrderRepository;

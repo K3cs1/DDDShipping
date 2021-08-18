@@ -16,11 +16,10 @@
     <div class="row">
         <div class="col-md-9">
             <form action="#" th:action="@{/shippingManagement}" th:object="${customerOrder}" method="post">
-                <!--
-                <ul th:if="${#fields.hasErrors('*')}" class="errorlist">
-                    <li th:each="err : ${#fields.errors('*')}" th:text="${err}">Input is incorrect</li>
-                </ul>
-                -->
+                <div th:if="${#fields.hasErrors('orderItems')}">
+                    <span th:if="${#fields.hasErrors('orderItems')}" th:errors="*{orderItems}" class="text-danger"
+                          th:text="#{shipping.validation.error.order.items}">At least one customer order required!</span>
+                </div>
                 <div class="row">
                     <div class="form-group col">
                         <label for="paymentMethod" class="col-form-label" th:text="#{shipping.payment.method}">Payment method</label>
@@ -29,12 +28,14 @@
                                     th:text="#{${'shipping.payment.method.' + payment.paymentMethod}}">Payment method 1
                             </option>
                         </select>
-                        <span th:if="${#fields.hasErrors('paymentMethod')}" th:errors="*{paymentMethod}" class="text-danger"></span>
+                        <span th:if="${#fields.hasErrors('paymentMethod')}" th:errors="*{paymentMethod}" class="text-danger"
+                              th:text="#{shipping.validation.error.paymentMethod}"></span>
                     </div>
                     <div class="form-group col">
                         <label for="address" class="col-form-label" th:text="#{shipping.address}">Address</label>
                         <input type="text" th:field="*{address}" class="form-control" id="address" th:placeholder="#{shipping.address}">
-                        <span th:if="${#fields.hasErrors('address')}" th:errors="*{address}" class="text-danger"></span>
+                        <span th:if="${#fields.hasErrors('address')}" th:errors="*{address}" class="text-danger"
+                              th:text="#{shipping.validation.error.address}"></span>
                     </div>
                 </div>
                 <div class="row" th:each="row,rowStat : *{orderItems}">
@@ -51,29 +52,33 @@
                         <label th:for="@{|quantity-${rowStat.index}|}" class="col-form-label" th:text="#{shipping.orderItems.quantity}">Quantity</label>
                         <input type="text" th:field="*{orderItems[__${rowStat.index}__].quantity}" class="form-control"
                                th:id="@{|quantity-${rowStat.index}|}"
-                               th:placeholder="#{shipping.orderItems.quantity}"
-                               th:errorclass="fieldError">
-                        <!-- <span th:if="${#fields.hasErrors('productId')}" th:errors="*{productId}" class="text-danger"></span> -->
+                               th:placeholder="#{shipping.orderItems.quantity}">
+                        <span th:if="${#fields.hasErrors('${customerOrder.orderItems[__${rowStat.index}__].quantity}')}"
+                              th:errors="*{orderItems[__${rowStat.index}__].quantity}"
+                              class="text-danger"
+                              th:text="#{shipping.validation.error.quantity}"></span>
                     </div>
                     <div class="form-group col">
                         <label th:for="@{|unitPrice-${rowStat.index}|}" class="col-form-label" th:text="#{shipping.orderItems.unit.price}">Unit price</label>
                         <input type="text" th:field="*{orderItems[__${rowStat.index}__].unitPrice}" class="form-control"
                                th:id="@{|unitPrice-${rowStat.index}|}"
-                               th:placeholder="#{shipping.orderItems.unit.price}"
-                               th:errorclass="fieldError">
-                        <!-- <span th:if="${#fields.hasErrors('productId')}" th:errors="*{productId}" class="text-danger"></span> -->
+                               th:placeholder="#{shipping.orderItems.unit.price}">
+                        <span th:if="${#fields.hasErrors('${customerOrder.orderItems[__${rowStat.index}__].unitPrice}')}"
+                              th:errors="*{orderItems[__${rowStat.index}__].unitPrice}" class="text-danger"
+                              th:text="#{shipping.validation.error.unit.price}"></span>
                     </div>
                     <div class="form-group col">
                         <label th:for="@{|unitWeight-${rowStat.index}|}" class="col-form-label" th:text="#{shipping.orderItems.unit.weight}">Unit
                             weight</label>
                         <input type="text" th:field="*{orderItems[__${rowStat.index}__].unitWeight}" class="form-control"
                                th:id="@{|unitWeight-${rowStat.index}|}"
-                               th:placeholder="#{shipping.orderItems.unit.weight}"
-                               th:errorclass="fieldError">
-                        <!-- <span th:if="${#fields.hasErrors('unitWeight')}" th:errors="*{unitWeight}" class="text-danger"></span> -->
+                               th:placeholder="#{shipping.orderItems.unit.weight}">
+                        <span th:if="${#fields.hasErrors('${customerOrder.orderItems[__${rowStat.index}__].unitWeight}')}"
+                              th:errors="*{orderItems[__${rowStat.index}__].unitWeight}" class="text-danger"
+                              th:text="#{shipping.validation.error.unit.weight}"></span>
                     </div>
                     <div class="form-group col">
-                        <button type="submit" class="btn btn-primary" name="removeOrderItem" th:value="${rowStat.index}"
+                        <button type="submit" class="btn btn-danger" name="removeOrderItem" th:value="${rowStat.index}"
                                 th:text="#{shipping.orderItems.remove}">Remove order item
                         </button>
                     </div>

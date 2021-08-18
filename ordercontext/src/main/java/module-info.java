@@ -4,6 +4,7 @@ import org.kecsi.dddmodules.ordercontext.service.OrderService;
 module org.kecsi.dddmodules.ordercontext {
 	requires lombok;
 	requires java.annotation;
+	requires java.validation;
 	requires spring.core;
 	requires spring.beans;
 	requires spring.context;

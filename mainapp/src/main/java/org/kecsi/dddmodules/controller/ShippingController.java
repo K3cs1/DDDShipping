@@ -2,6 +2,7 @@ package org.kecsi.dddmodules.controller;
 
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 import org.kecsi.dddmodules.infrastructure.service.AdapterService;
 import org.kecsi.dddmodules.ordercontext.model.CustomerOrder;
@@ -46,7 +47,10 @@ public class ShippingController {
 	}
 
 	@PostMapping( value = "/shippingManagement", params = { "addCustomerOrder" } )
-	public String saveCustomerOrder( CustomerOrder customerOrder, BindingResult errors, Model model ) {
+	public String saveCustomerOrder( @Valid CustomerOrder customerOrder, BindingResult bindingResult ) {
+		if ( bindingResult.hasErrors() ) {
+			return "customerOrder";
+		}
 		orderService.placeOrder( customerOrder );
 		shippingService.shipOrder( adapterService.customerToShippableOrder( customerOrder ) );
 		return "redirect:/";
@@ -59,23 +63,29 @@ public class ShippingController {
 	}
 
 	@PostMapping( value = "/shippingManagement", params = { "addOrderItem" } )
-	public String addOrderItem( CustomerOrder customerOrder ) {
+	public String addOrderItem( CustomerOrder customerOrder, BindingResult bindingResult ) {
+		if ( bindingResult.hasErrors() ) {
+			return "customerOrder";
+		}
 		customerOrder.getOrderItems().add( new OrderItem() );
 		return "customerOrder";
 	}
 
 	@PostMapping( value = "/shippingManagement", params = { "removeOrderItem" } )
 	public String removeOrderItems( CustomerOrder customerOrder, BindingResult bindingResult, final HttpServletRequest request ) {
+		if ( bindingResult.hasErrors() ) {
+			return "customerOrder";
+		}
 		Integer orderItemRow = Integer.valueOf( request.getParameter( "removeOrderItem" ) );
 		customerOrder.getOrderItems().remove( orderItemRow.intValue() );
 		return "customerOrder";
 	}
 
 	@DeleteMapping( "/deleteCustomerOrder/{orderId}" )
-	public String deleteCustomerOrder( @PathVariable( "orderId" ) long orderId ) {
+	public String deleteCustomerOrder( @PathVariable( value = "orderId", required = true ) long orderId ) {
 		orderService.deleteCustomerOrder( orderId );
 		shippingService.deleteSippableOrderByOrderId( orderId );
-		return "index";
+		return "redirect:/";
 	}
 
 }

@@ -23,6 +23,9 @@ dependencies {
     // https://mvnrepository.com/artifact/org.projectlombok/lombok
     implementation 'org.projectlombok:lombok:1.18.20'
     annotationProcessor( 'org.projectlombok:lombok:1.18.20' )
+    // https://mvnrepository.com/artifact/javax.validation/validation-api
+    implementation 'javax.validation:validation-api:2.0.1.Final'
+
 
     implementation 'org.springframework.boot:spring-boot-starter'
     implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
