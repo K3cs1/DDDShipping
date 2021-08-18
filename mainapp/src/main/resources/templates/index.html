@@ -43,7 +43,7 @@
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                <p>Modal body text goes here.</p>
+                                <p>Address: <span th:id="@{|shippingsModalAddress-${order.orderId}|}"></span></p>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -75,6 +75,8 @@
                 .then((json) => {
                     const response = JSON.stringify(json)
                     console.log(response);
+                    let shippingsModalAddress = document.getElementById('shippingsModalAddress-' + json.orderId);
+                    shippingsModalAddress.innerText = json.address;
                 });
         }, false);
     });
