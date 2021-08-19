@@ -44,19 +44,34 @@
 
         let fillModalBody = json => {
             let shippingsModalBody = document.getElementById('shippingsModalBody-' + json.orderId);
-            let taxable = JSON.parse(json.taxable) ? '[[#{shipping.yes}]]' : '[[#{shipping.no}]]';
+            const taxable = JSON.parse(json.taxable) ? '[[#{shipping.yes}]]' : '[[#{shipping.no}]]';
+            let locale = '[[${#locale}]]';
+            locale = locale.replace('_', '-');
+            const currencyByLocale = locale === 'hu-HU' ? 'HUF' : 'USD';
+            const massByLocale = locale === 'hu-HU' ? 'kilogram' : 'pound';
+            const currencyFormatter = new Intl.NumberFormat(locale, {
+                style: 'currency',
+                currency: currencyByLocale
+            });
+            const decimalFormatter = new Intl.NumberFormat(locale, {
+                maximumSignificantDigits: 2,
+                style: 'unit',
+                unit: massByLocale
+
+            });
             let modalBodyHtml = `<ul class="list-group">
-                        <li class="list-group-item">[[#{shipping.calculated.estimated.value}]]: ${json.calculatedEstimatedValue}</li>
-                        <li class="list-group-item">[[#{shipping.total.price}]]: ${json.totalPrice}</li>
-                        <li class="list-group-item">[[#{shipping.calculated.totao.weight}]]: ${json.calculatedTotalWeight}</li>
+                        <li class="list-group-item">[[#{shipping.calculated.estimated.value}]]: ${currencyFormatter.format(json.calculatedEstimatedValue)}</li>
+                        <li class="list-group-item">[[#{shipping.total.price}]]: ${currencyFormatter.format(json.totalPrice)}</li>
+                        <li class="list-group-item">[[#{shipping.calculated.totao.weight}]]: ${decimalFormatter.format(json.calculatedTotalWeight)}</li>
                         <li class="list-group-item">[[#{shipping.taxable}]]: ${taxable}</li></ul>`;
-            let packageItemsBodyHtml = '<table class="table table-stripped table-responsive-md"><thead>' +
-                '<tr><th>[[#{shipping.product.id}]]</th><th>[[#{shipping.orderItems.unit.weight}]]</th><th>[[#{shipping.estimated.value}]]</th></tr></thead><tbody>';
+            let packageItemsBodyHtml = `<table class="table table-stripped table-responsive-md"><thead>
+                <tr><th>[[#{shipping.product.id}]]</th><th>[[#{shipping.orderItems.unit.weight}]]</th><th>[[#{shipping.estimated.value}]]
+                </th></tr></thead><tbody>`;
             let tempPackageItemsHtml = '';
             json.packageItems.forEach(packageItem => {
                 tempPackageItemsHtml = tempPackageItemsHtml.concat(`<tr><td>${packageItem.productId}</td>`);
-                tempPackageItemsHtml = tempPackageItemsHtml.concat(`<td>${packageItem.weight}</td>`);
-                tempPackageItemsHtml = tempPackageItemsHtml.concat(`<td>${packageItem.estimatedValue}</td></tr>`);
+                tempPackageItemsHtml = tempPackageItemsHtml.concat(`<td>${decimalFormatter.format(packageItem.weight)}</td>`);
+                tempPackageItemsHtml = tempPackageItemsHtml.concat(`<td>${currencyFormatter.format(packageItem.estimatedValue)}</td></tr>`);
             });
             modalBodyHtml = modalBodyHtml.concat(packageItemsBodyHtml, tempPackageItemsHtml);
             modalBodyHtml = modalBodyHtml.concat('</tbody></table>');
