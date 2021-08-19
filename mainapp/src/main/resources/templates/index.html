@@ -73,15 +73,15 @@
                 }
             ).then(data => data.json())
                 .then((json) => {
-                    //const response = JSON.stringify(json)
-                    //console.log(response);
                     let shippingsModalBody = document.getElementById('shippingsModalBody-' + json.orderId);
-                    let modalBodyHtml = `<ul class="list-group"><li class="list-group-item">Calculated estimated value: ${json.calculatedEstimatedValue}</li>
-                        <li class="list-group-item">Total price: ${json.totalPrice}</li>
-                        <li class="list-group-item">Calculated total weight: ${json.calculatedTotalWeight}</li>
-                        <li class="list-group-item">Taxable: ${json.taxable}</li></ul>`;
+                    let taxable = JSON.parse(json.taxable) ? '[[#{shipping.yes}]]' : '[[#{shipping.no}]]';
+                    let modalBodyHtml = `<ul class="list-group">
+                        <li class="list-group-item">[[#{shipping.calculated.estimated.value}]]: ${json.calculatedEstimatedValue}</li>
+                        <li class="list-group-item">[[#{shipping.total.price}]]: ${json.totalPrice}</li>
+                        <li class="list-group-item">[[#{shipping.calculated.totao.weight}]]: ${json.calculatedTotalWeight}</li>
+                        <li class="list-group-item">[[#{shipping.taxable}]]: ${taxable}</li></ul>`;
                     let packageItemsBodyHtml = '<table class="table table-stripped table-responsive-md"><thead>' +
-                        '<tr><th>Product ID</th><th>Weight</th><th>Estimated value</th></tr></thead><tbody>';
+                        '<tr><th>[[#{shipping.product.id}]]</th><th>[[#{shipping.orderItems.unit.weight}]]</th><th>[[#{shipping.estimated.value}]]</th></tr></thead><tbody>';
                     let tempPackageItemsHtml = '';
                     json.packageItems.forEach(packageItem => {
                         tempPackageItemsHtml = tempPackageItemsHtml.concat(`<tr><td>${packageItem.productId}</td>`);
