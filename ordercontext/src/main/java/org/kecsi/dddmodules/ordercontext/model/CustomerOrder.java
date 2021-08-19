@@ -39,7 +39,7 @@ public class CustomerOrder {
 	@Builder.Default
 	private List<OrderItem> orderItems = new ArrayList<>();
 
-	public float calculateTotalPrice() {
+	public double calculateTotalPrice() {
 		return orderItems.stream().map( OrderItem::getTotalPrice )
 				.reduce( 0F, Float::sum );
 	}
