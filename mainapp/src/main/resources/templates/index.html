@@ -35,69 +35,13 @@
                         </button>
                     </td>
                 </form>
-                <div class="modal fade" th:id="@{|shippingsModal-${order.orderId}|}" tabindex="-1" aria-labelledby="shippingsModalLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" th:text="#{shipping.show.shippings}">Shippings</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <div th:id="@{|shippingsModalBody-${order.orderId}|}"></div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" th:text="#{shipping.button.close.modal}">Close</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <div th:replace="fragments/modalFragment :: modalDiv"></div>
             </tr>
             </tbody>
         </table>
     </div>
     <p><a href="/addCustomerOrder" class="btn btn-primary" th:text="#{shipping.add.customer.order}">Add customer order</a></p>
 </div>
-<script>
-    const url = `[[@{/showShippings}]]`;
-    let modals = document.querySelectorAll('.modal');
-    modals.forEach(modal => {
-        modal.addEventListener('show.bs.modal', (event) => {
-            const showModalButton = event.relatedTarget;
-            const orderId = showModalButton.getAttribute('data-id');
-            fetch(
-                url,
-                {
-                    headers: {"Content-Type": "application/json"},
-                    body: orderId,
-                    method: "POST"
-                }
-            ).then(data => data.json())
-                .then((json) => {
-                    fillModalBody(json);
-                });
-        }, false);
-    });
-
-    let fillModalBody = json => {
-        let shippingsModalBody = document.getElementById('shippingsModalBody-' + json.orderId);
-        let taxable = JSON.parse(json.taxable) ? '[[#{shipping.yes}]]' : '[[#{shipping.no}]]';
-        let modalBodyHtml = `<ul class="list-group">
-                        <li class="list-group-item">[[#{shipping.calculated.estimated.value}]]: ${json.calculatedEstimatedValue}</li>
-                        <li class="list-group-item">[[#{shipping.total.price}]]: ${json.totalPrice}</li>
-                        <li class="list-group-item">[[#{shipping.calculated.totao.weight}]]: ${json.calculatedTotalWeight}</li>
-                        <li class="list-group-item">[[#{shipping.taxable}]]: ${taxable}</li></ul>`;
-        let packageItemsBodyHtml = '<table class="table table-stripped table-responsive-md"><thead>' +
-            '<tr><th>[[#{shipping.product.id}]]</th><th>[[#{shipping.orderItems.unit.weight}]]</th><th>[[#{shipping.estimated.value}]]</th></tr></thead><tbody>';
-        let tempPackageItemsHtml = '';
-        json.packageItems.forEach(packageItem => {
-            tempPackageItemsHtml = tempPackageItemsHtml.concat(`<tr><td>${packageItem.productId}</td>`);
-            tempPackageItemsHtml = tempPackageItemsHtml.concat(`<td>${packageItem.weight}</td>`);
-            tempPackageItemsHtml = tempPackageItemsHtml.concat(`<td>${packageItem.estimatedValue}</td></tr>`);
-        });
-        modalBodyHtml = modalBodyHtml.concat(packageItemsBodyHtml, tempPackageItemsHtml);
-        modalBodyHtml = modalBodyHtml.concat('</tbody></table>');
-        shippingsModalBody.innerHTML = modalBodyHtml;
-    };
-</script>
+<div th:replace="fragments/modalFragment :: modalJs"></div>
 </body>
 </html>
