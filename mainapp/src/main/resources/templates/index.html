@@ -76,10 +76,10 @@
                     //const response = JSON.stringify(json)
                     //console.log(response);
                     let shippingsModalBody = document.getElementById('shippingsModalBody-' + json.orderId);
-                    let modalBodyHtml = `<ul><li>Calculated estimated value: ${json.calculatedEstimatedValue}</li>
-                        <li>Total price: ${json.totalPrice}</li>
-                        <li>Calculated total weight: ${json.calculatedTotalWeight}</li>
-                        <li>Taxable: ${json.taxable}</li></ul>`;
+                    let modalBodyHtml = `<ul class="list-group"><li class="list-group-item">Calculated estimated value: ${json.calculatedEstimatedValue}</li>
+                        <li class="list-group-item">Total price: ${json.totalPrice}</li>
+                        <li class="list-group-item">Calculated total weight: ${json.calculatedTotalWeight}</li>
+                        <li class="list-group-item">Taxable: ${json.taxable}</li></ul>`;
                     let packageItemsBodyHtml = '<table class="table table-stripped table-responsive-md"><thead>' +
                         '<tr><th>Product ID</th><th>Weight</th><th>Estimated value</th></tr></thead><tbody>';
                     let tempPackageItemsHtml = '';
