@@ -29,9 +29,14 @@ public class ParcelShippingService implements ShippingService {
 
 	@Override
 	public Optional<Parcel> getParcelByOrderId( long orderId ) {
-		Optional<ShippableOrder> shippableOrder = shippingOrderRepository.findShippableOrderByOrderId( orderId );
-		if ( shippableOrder.isPresent() ) {
-			return Optional.of( new Parcel( shippableOrder.get().getOrderId(), shippableOrder.get().getAddress(), shippableOrder.get().getPackageItems() ) );
+		Optional<ShippableOrder> shippableOrderOptional = shippingOrderRepository.findShippableOrderByOrderId( orderId );
+		if ( shippableOrderOptional.isPresent() ) {
+			ShippableOrder shippableOrder = shippableOrderOptional.get();
+			return Optional.of( Parcel.builder()
+					.orderId( shippableOrder.getOrderId() )
+					.totalPrice( shippableOrder.getTotalPrice() )
+					.packageItems( shippableOrder.getPackageItems() )
+					.build() );
 		}
 		return Optional.empty();
 	}

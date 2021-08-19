@@ -12,7 +12,7 @@ public enum PaymentMethodType {
 	PAYPAL( "paypal" );
 
 	private String paymentMethod;
-	public static List<PaymentMethodType> ALL_PAYMENT_METHODS = List.of( CASH_ON_DELIVERY, BANK_CARD, CREDIT_CARD, PAYPAL );
+	public static List<PaymentMethodType> ALL_PAYMENT_METHODS = List.of( values() );
 
 	PaymentMethodType( String paymentMethod ) {
 		this.paymentMethod = paymentMethod;

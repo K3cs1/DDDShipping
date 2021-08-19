@@ -7,18 +7,16 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Document( collection = "customer_order" )
 public class CustomerOrder {
 
@@ -38,6 +36,7 @@ public class CustomerOrder {
 
 	@NotEmpty
 	@Valid
+	@Builder.Default
 	private List<OrderItem> orderItems = new ArrayList<>();
 
 	public float calculateTotalPrice() {

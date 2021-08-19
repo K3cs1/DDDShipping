@@ -12,10 +12,16 @@ public class ShippableOrderAdapterService implements AdapterService {
 
 	@Override
 	public ShippableOrder customerToShippableOrder( CustomerOrder customerOrder ) {
-		return new ShippableOrder( customerOrder.getOrderId(), customerOrder.getAddress(), customerOrder.getOrderItems()
-				.stream().map( orderItem -> new PackageItem( orderItem.getProductId(),
-						orderItem.getUnitWeight(),
-						orderItem.getQuantity() * orderItem.getUnitPrice() ) ).collect( Collectors.toList() ) );
+		return ShippableOrder.builder()
+				.orderId( customerOrder.getOrderId() )
+				.totalPrice( customerOrder.calculateTotalPrice() )
+				.packageItems( customerOrder.getOrderItems().stream()
+						.map( orderItem -> PackageItem.builder()
+								.productId( orderItem.getProductId() )
+								.weight( orderItem.getUnitWeight() )
+								.estimatedValue( orderItem.getQuantity() * orderItem.getUnitPrice() ).build() )
+						.collect( Collectors.toList() ) )
+				.build();
 	}
 
 }

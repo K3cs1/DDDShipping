@@ -1,39 +1,35 @@
 package org.kecsi.dddmodules.shippingcontext.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Parcel {
+
 	private long orderId;
-	private String address;
-	private String trackingId;
-	private List<PackageItem> packageItems;
 
-	public Parcel( long orderId, String address, List<PackageItem> packageItems ) {
-		this.orderId = orderId;
-		this.address = address;
-		this.packageItems = packageItems;
-	}
+	private double totalPrice;
 
-	public float calculateTotalWeight() {
+	@Builder.Default
+	private List<PackageItem> packageItems = new ArrayList<>();
+
+	public float getCalculatedTotalWeight() {
 		return packageItems.stream().map( PackageItem::getWeight )
 				.reduce( 0F, Float::sum );
 	}
 
 	public boolean isTaxable() {
-		return calculateEstimatedValue() > 100;
+		return getCalculatedEstimatedValue() > 100;
 	}
 
-	public float calculateEstimatedValue() {
-		return packageItems.stream().map( PackageItem::getWeight )
+	public float getCalculatedEstimatedValue() {
+		return packageItems.stream().map( PackageItem::getEstimatedValue )
 				.reduce( 0F, Float::sum );
 	}
 }

@@ -13,7 +13,7 @@ public enum ProductType {
 
 	private long productId;
 	private String productName;
-	public static final List<ProductType> ALL_PRODUCTS = List.of( PRODUCT_ONE, PRODUCT_TWO, PRODUCT_THREE, PRODUCT_FOUR );
+	public static final List<ProductType> ALL_PRODUCTS = List.of( values() );
 
 	ProductType( long productId, String productName ) {
 		this.productId = productId;

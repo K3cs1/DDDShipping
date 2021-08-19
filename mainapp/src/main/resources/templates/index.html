@@ -39,14 +39,14 @@
                     <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" th:text="${order.orderId}">Modal title</h5>
+                                <h5 class="modal-title" th:text="#{shipping.show.shippings}">Shippings</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                <p>Address: <span th:id="@{|shippingsModalAddress-${order.orderId}|}"></span></p>
+                                <div th:id="@{|shippingsModalBody-${order.orderId}|}"></div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" th:text="#{shipping.button.close.modal}">Close</button>
                             </div>
                         </div>
                     </div>
@@ -73,10 +73,24 @@
                 }
             ).then(data => data.json())
                 .then((json) => {
-                    const response = JSON.stringify(json)
-                    console.log(response);
-                    let shippingsModalAddress = document.getElementById('shippingsModalAddress-' + json.orderId);
-                    shippingsModalAddress.innerText = json.address;
+                    //const response = JSON.stringify(json)
+                    //console.log(response);
+                    let shippingsModalBody = document.getElementById('shippingsModalBody-' + json.orderId);
+                    let modalBodyHtml = `<ul><li>Calculated estimated value: ${json.calculatedEstimatedValue}</li>
+                        <li>Total price: ${json.totalPrice}</li>
+                        <li>Calculated total weight: ${json.calculatedTotalWeight}</li>
+                        <li>Taxable: ${json.taxable}</li></ul>`;
+                    let packageItemsBodyHtml = '<table class="table table-stripped table-responsive-md"><thead>' +
+                        '<tr><th>Product ID</th><th>Weight</th><th>Estimated value</th></tr></thead><tbody>';
+                    let tempPackageItemsHtml = '';
+                    json.packageItems.forEach(packageItem => {
+                        tempPackageItemsHtml = tempPackageItemsHtml.concat(`<tr><td>${packageItem.productId}</td>`);
+                        tempPackageItemsHtml = tempPackageItemsHtml.concat(`<td>${packageItem.weight}</td>`);
+                        tempPackageItemsHtml = tempPackageItemsHtml.concat(`<td>${packageItem.estimatedValue}</td></tr>`);
+                    });
+                    modalBodyHtml = modalBodyHtml.concat(packageItemsBodyHtml, tempPackageItemsHtml);
+                    modalBodyHtml = modalBodyHtml.concat('</tbody></table>');
+                    shippingsModalBody.innerHTML = modalBodyHtml;
                 });
         }, false);
     });
