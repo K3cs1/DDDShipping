@@ -22,14 +22,14 @@
 </div>
 <div th:fragment="modalJs" th:remove="tag">
     <script>
-        const url = `[[@{/showShippings}]]`;
+        const showShippingsUrl = `[[@{/showShippings}]]`;
         let modals = document.querySelectorAll('.modal');
         modals.forEach(modal => {
             modal.addEventListener('show.bs.modal', (event) => {
                 const showModalButton = event.relatedTarget;
                 const orderId = showModalButton.getAttribute('data-id');
                 fetch(
-                    url,
+                    showShippingsUrl,
                     {
                         headers: {"Content-Type": "application/json"},
                         body: orderId,

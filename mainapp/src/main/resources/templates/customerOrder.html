@@ -52,7 +52,7 @@
                         <label th:for="@{|unitPrice-${rowStat.index}|}" class="col-form-label" th:text="#{shipping.orderItems.unit.price}">Unit price</label>
                         <input type="text" th:field="*{orderItems[__${rowStat.index}__].unitPrice}" class="form-control"
                                th:id="@{|unitPrice-${rowStat.index}|}"
-                               th:placeholder="#{shipping.orderItems.unit.price}">
+                               th:placeholder="#{shipping.orderItems.unit.price}"><span th:text="#{shipping.orderItems.currency}"></span>
                         <span th:if="${#fields.hasErrors('${customerOrder.orderItems[__${rowStat.index}__].unitPrice}')}"
                               th:errors="*{orderItems[__${rowStat.index}__].unitPrice}" class="text-danger"></span>
                     </div>
@@ -61,7 +61,7 @@
                             weight</label>
                         <input type="text" th:field="*{orderItems[__${rowStat.index}__].unitWeight}" class="form-control"
                                th:id="@{|unitWeight-${rowStat.index}|}"
-                               th:placeholder="#{shipping.orderItems.unit.weight}">
+                               th:placeholder="#{shipping.orderItems.unit.weight}"><span th:text="#{shipping.orderItems.mass}"></span>
                         <span th:if="${#fields.hasErrors('${customerOrder.orderItems[__${rowStat.index}__].unitWeight}')}"
                               th:errors="*{orderItems[__${rowStat.index}__].unitWeight}" class="text-danger"></span>
                     </div>
