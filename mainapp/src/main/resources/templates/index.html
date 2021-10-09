@@ -20,7 +20,7 @@
             </thead>
             <tbody>
             <tr th:each="order : ${customerOrders}">
-                <form id="mainForm" action="#" method="">
+                <form th:id="${'mainForm-' + order.orderId}" action="#" method="">
                     <td th:text="#{${'shipping.payment.method.' + order.paymentMethod}}"></td>
                     <td th:text="${order.address}"></td>
                     <td>

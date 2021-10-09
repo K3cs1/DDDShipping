@@ -5,15 +5,20 @@
 <div th:fragment="mainJs" th:remove="tag">
     <script>
         function submitForm(orderId, orderType) {
-            let mainForm = document.getElementById('mainForm');
+            const mainFormId = 'mainForm-' + orderId;
+            let mainForm = document.getElementById(mainFormId);
             if (orderType == 'editOrder') {
                 mainForm.action = '/editCustomerOrder/' + orderId;
-                mainForm.method = 'post'
+                mainForm.method = 'post';
                 mainForm.submit();
             }
             if (orderType == 'deleteOrder') {
                 mainForm.action = '/deleteCustomerOrder/' + orderId;
-                mainForm.method = 'delete';
+                mainForm.method = 'post';
+                let hiddenInput = document.createElement('input');
+                hiddenInput.name = '_method';
+                hiddenInput.value = 'delete';
+                mainForm.appendChild(hiddenInput);
                 mainForm.submit();
             }
         }
