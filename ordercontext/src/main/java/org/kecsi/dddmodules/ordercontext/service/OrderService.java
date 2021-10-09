@@ -8,6 +8,9 @@ import org.springframework.stereotype.Service;
 
 @Service
 public interface OrderService extends ApplicationService {
+
+	CustomerOrder findCustomerOrderByOrderId( long orderId );
+
 	void placeOrder( CustomerOrder order );
 
 	List<CustomerOrder> getCustomerOrders();

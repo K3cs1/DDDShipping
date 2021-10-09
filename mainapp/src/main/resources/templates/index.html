@@ -20,7 +20,7 @@
             </thead>
             <tbody>
             <tr th:each="order : ${customerOrders}">
-                <form action="#" th:action="@{'/deleteCustomerOrder/{orderId}'(orderId=${order.orderId})}" th:method="delete">
+                <form id="mainForm" action="#" method="">
                     <td th:text="#{${'shipping.payment.method.' + order.paymentMethod}}"></td>
                     <td th:text="${order.address}"></td>
                     <td>
@@ -31,7 +31,11 @@
                     </td>
                     <td>
                         <input type="hidden" name="orderId" th:value="${order.orderId}">
-                        <button type="submit" class="btn btn-danger" name="deleteOrder" th:text="#{shipping.delete.customer.order}">Delete customer order
+                        <button type="submit" class="btn btn-primary" name="editOrder" th:onclick="|submitForm(${order.orderId}, 'editOrder')|"
+                                th:text="#{shipping.edit.customer.order}">Edit customer order
+                        </button>
+                        <button type="submit" class="btn btn-danger" name="deleteOrder" th:onclick="|submitForm(${order.orderId}, 'deleteOrder')|"
+                                th:text="#{shipping.delete.customer.order}">Delete customer order
                         </button>
                     </td>
                 </form>
@@ -43,5 +47,6 @@
     <p><a href="/addCustomerOrder" class="btn btn-primary" th:text="#{shipping.add.customer.order}">Add customer order</a></p>
 </div>
 <div th:replace="fragments/modalFragment :: modalJs"></div>
+<div th:replace="fragments/mainJsFragment :: mainJs"></div>
 </body>
 </html>

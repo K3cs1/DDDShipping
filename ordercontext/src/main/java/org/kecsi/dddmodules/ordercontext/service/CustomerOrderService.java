@@ -26,6 +26,11 @@ public class CustomerOrderService implements OrderService {
 	}
 
 	@Override
+	public CustomerOrder findCustomerOrderByOrderId( long orderId ) {
+		return this.orderRepository.findCustomerOrderByOrderId( orderId );
+	}
+
+	@Override
 	public void placeOrder( CustomerOrder order ) {
 		order.setOrderId( sequenceGeneratorService.generateSequence( CustomerOrder.SEQUENCE_NAME ) );
 		this.orderRepository.save( order );

@@ -83,6 +83,12 @@ public class ShippingController {
 		return "customerOrder";
 	}
 
+	@PostMapping( value = "/editCustomerOrder/{orderId}" )
+	public String editOrderItems( @PathVariable( value = "orderId" ) long orderId, Model model ) {
+		model.addAttribute( "customerOrder", orderService.findCustomerOrderByOrderId( orderId ) );
+		return "customerOrder";
+	}
+
 	@DeleteMapping( "/deleteCustomerOrder/{orderId}" )
 	public String deleteCustomerOrder( @PathVariable( value = "orderId" ) long orderId ) {
 		orderService.deleteCustomerOrder( orderId );
