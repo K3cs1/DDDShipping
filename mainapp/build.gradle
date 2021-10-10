@@ -18,8 +18,13 @@ repositories {
 dependencies {
     api project( ':infrastructure' )
 
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
+    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.8.1'
+    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-params', version: '5.8.1'
+    testCompileOnly group: 'org.apiguardian', name: 'apiguardian-api', version: '1.1.0'
+    compileOnly group: 'org.apiguardian', name: 'apiguardian-api', version: '1.1.0'
+    testRuntimeOnly group: 'org.apiguardian', name: 'apiguardian-api', version: '1.1.0'
+    testRuntimeOnly group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5.8.1'
+    testImplementation group: 'org.hamcrest', name: 'hamcrest', version: '2.2'
 
     // https://mvnrepository.com/artifact/org.projectlombok/lombok
     implementation 'org.projectlombok:lombok:1.18.20'
@@ -33,6 +38,10 @@ dependencies {
 
     //developmentOnly 'org.springframework.boot:spring-boot-devtools'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+configurations.testImplementation {
+    exclude group: 'org.apiguardian', module: 'apiguardian-api'
 }
 
 application {
