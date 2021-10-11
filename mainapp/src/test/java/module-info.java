@@ -6,10 +6,13 @@ import org.kecsi.dddmodules.shippingcontext.repository.ShippingOrderRepository;
 import org.kecsi.dddmodules.shippingcontext.service.ShippingService;
 
 module org.kecsi.dddmodules.mainapp.test {
-	requires transitive org.junit.jupiter.api;
-	requires transitive org.assertj.core;
-	requires transitive org.mockito;
-	requires transitive org.apiguardian.api;
+	requires org.junit.jupiter.api;
+	requires org.assertj.core;
+	requires org.mockito;
+	requires org.apiguardian.api;
+	requires org.junit.platform.commons;
+	requires org.junit.jupiter.params;
+	requires org.junit.platform.launcher;
 
 	requires lombok;
 	requires org.apache.tomcat.embed.core;
@@ -34,7 +37,6 @@ module org.kecsi.dddmodules.mainapp.test {
 	requires spring.test;
 	requires spring.boot.test;
 	requires spring.boot.test.autoconfigure;
-	//opens org.kecsi.dddmodules.mainapp to spring.core, spring.beans, spring.context;
-	opens org.kecsi.dddmodules.controller to spring.core, spring.beans, spring.context;
-	//exports org.junit.platform.commons.logging;
+	opens org.kecsi.dddmodules.controller
+			to spring.core, spring.beans, spring.context, org.junit.platform.commons, org.junit.platform.commons.logging, org.junit.platform.launcher;
 }

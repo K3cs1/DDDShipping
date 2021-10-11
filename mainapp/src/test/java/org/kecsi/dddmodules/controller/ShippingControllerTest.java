@@ -2,7 +2,6 @@ package org.kecsi.dddmodules.controller;
 
 import java.util.List;
 
-import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -27,7 +26,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ExtendWith( SpringExtension.class )
 @SpringBootTest
 @AutoConfigureMockMvc
-@Slf4j
 public class ShippingControllerTest {
 
 	@MockBean
@@ -37,7 +35,7 @@ public class ShippingControllerTest {
 	private MockMvc mockMvc;
 
 	@Test
-	@DisplayName( "Test /allProducts" )
+	@DisplayName( "Test /showShippings" )
 	public void showShippings() throws Exception {
 
 		// Prepare mock Parcel
