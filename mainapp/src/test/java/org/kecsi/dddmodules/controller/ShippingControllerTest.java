@@ -1,30 +1,31 @@
 package org.kecsi.dddmodules.controller;
 
 import java.util.List;
+import java.util.Optional;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.kecsi.dddmodules.shippingcontext.model.PackageItem;
 import org.kecsi.dddmodules.shippingcontext.model.Parcel;
 import org.kecsi.dddmodules.shippingcontext.service.ShippingService;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import static org.hamcrest.Matchers.is;
+import static org.mockito.Mockito.doReturn;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @ExtendWith( SpringExtension.class )
-@SpringBootTest
+@SpringBootTest( classes = { org.kecsi.dddmodules.mainapp.Application.class },
+		webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT )
 @AutoConfigureMockMvc
 public class ShippingControllerTest {
 
@@ -42,15 +43,16 @@ public class ShippingControllerTest {
 		Parcel mockParcel = initParcelData();
 
 		// Prepare mocked service method
-		Mockito.doReturn( mockParcel ).when( shippingService.getParcelByOrderId( mockParcel.getOrderId() ) );
+		doReturn( Optional.of( mockParcel ) ).when( shippingService ).getParcelByOrderId( mockParcel.getOrderId() );
 
 		// Perform GET request
-		mockMvc.perform( MockMvcRequestBuilders.get( "/showShippings" ) )
-				.andExpect( MockMvcResultMatchers.status().isOk() )
+		mockMvc.perform( post( "/showShippings" )
+						.contentType( MediaType.APPLICATION_JSON )
+						.content( new ObjectMapper().writeValueAsString( 1L ) ) )
+				.andExpect( status().isOk() )
 				.andExpect( content().contentType( MediaType.APPLICATION_JSON_VALUE ) )
-				.andExpect( header().string( HttpHeaders.ETAG, "\"1\"" ) )
-				.andExpect( header().string( HttpHeaders.LOCATION, "/showShippings" ) )
-				.andExpect( jsonPath( "$.id", is( 1 ) ) );
+				.andExpect( jsonPath( "$.orderId", is( 1 ) ) )
+				.andExpect( jsonPath( "$.totalPrice", is( 10.0 ) ) );
 	}
 
 	private Parcel initParcelData() {

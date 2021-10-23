@@ -23,7 +23,9 @@ module org.kecsi.dddmodules.mainapp {
 	uses ShippingOrderRepository;
 	uses ShippingService;
 	uses AdapterService;
+	requires transitive org.apiguardian.api;
 	requires transitive org.kecsi.dddmodules.infrastructure;
+	exports org.kecsi.dddmodules.mainapp;
 	opens org.kecsi.dddmodules.mainapp to spring.core, spring.beans, spring.context;
 	opens org.kecsi.dddmodules.controller to spring.core, spring.beans, spring.context;
 }
