@@ -1,12 +1,17 @@
 package org.kecsi.dddmodules.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.kecsi.dddmodules.ordercontext.model.CustomerOrder;
+import org.kecsi.dddmodules.ordercontext.model.OrderItem;
+import org.kecsi.dddmodules.ordercontext.service.OrderService;
 import org.kecsi.dddmodules.shippingcontext.model.PackageItem;
 import org.kecsi.dddmodules.shippingcontext.model.Parcel;
 import org.kecsi.dddmodules.shippingcontext.service.ShippingService;
@@ -20,27 +25,37 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.doReturn;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @ExtendWith( SpringExtension.class )
-@SpringBootTest( classes = { org.kecsi.dddmodules.mainapp.Application.class },
-		webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT )
+@SpringBootTest( classes = { org.kecsi.dddmodules.mainapp.Application.class }, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT )
 @AutoConfigureMockMvc
 public class ShippingControllerTest {
 
 	@MockBean
 	private ShippingService shippingService;
 
+	@MockBean
+	private OrderService orderService;
+
 	@Autowired
 	private MockMvc mockMvc;
+
+	private Parcel mockParcel;
+	private List<CustomerOrder> mockCustomerOrder;
+
+	@BeforeEach
+	public void initData() {
+		// Prepare mock Parcel
+		mockParcel = initParcelData();
+		mockCustomerOrder = initCustomerOrders();
+	}
 
 	@Test
 	@DisplayName( "Test /showShippings" )
 	public void showShippings() throws Exception {
-
-		// Prepare mock Parcel
-		Parcel mockParcel = initParcelData();
 
 		// Prepare mocked service method
 		doReturn( Optional.of( mockParcel ) ).when( shippingService ).getParcelByOrderId( mockParcel.getOrderId() );
@@ -53,6 +68,18 @@ public class ShippingControllerTest {
 				.andExpect( content().contentType( MediaType.APPLICATION_JSON_VALUE ) )
 				.andExpect( jsonPath( "$.orderId", is( 1 ) ) )
 				.andExpect( jsonPath( "$.totalPrice", is( 10.0 ) ) );
+	}
+
+	@Test
+	@DisplayName( "Test /shippingManagement " )
+	public void showCustomerOrders() throws Exception {
+		doReturn( mockCustomerOrder ).when( orderService ).getCustomerOrders();
+
+		mockMvc.perform( get( "/shippingManagement" )
+						.contentType( MediaType.APPLICATION_JSON ) )
+				.andExpect( status().isOk() )
+				.andExpect( content().contentType( MediaType.TEXT_HTML_VALUE + ";charset=UTF-8" ) );
+		//TODO more assertions
 	}
 
 	private Parcel initParcelData() {
@@ -70,6 +97,46 @@ public class ShippingControllerTest {
 								.weight( 20 )
 								.build() ) )
 				.build();
+	}
+
+	private List<CustomerOrder> initCustomerOrders() {
+		List<CustomerOrder> customerOrders = new ArrayList<>();
+		customerOrders.addAll( List.of(
+				CustomerOrder.builder()
+						.orderId( 1L )
+						.address( "Test Street 1." )
+						.paymentMethod( "Credit Card" )
+						.orderItems( List.of( OrderItem.builder()
+										.productId( 1L )
+										.quantity( 10 )
+										.unitWeight( 20 )
+										.unitPrice( 50 )
+										.build(),
+								OrderItem.builder()
+										.productId( 2L )
+										.quantity( 20 )
+										.unitWeight( 30 )
+										.unitPrice( 25 )
+										.build() ) )
+						.build(),
+				CustomerOrder.builder()
+						.orderId( 2L )
+						.address( "Test Street 2." )
+						.paymentMethod( "Debit Card " )
+						.orderItems( List.of( OrderItem.builder()
+										.productId( 1L )
+										.quantity( 30 )
+										.unitWeight( 40 )
+										.unitPrice( 60 )
+										.build(),
+								OrderItem.builder()
+										.productId( 2L )
+										.quantity( 70 )
+										.unitWeight( 80 )
+										.unitPrice( 90 )
+										.build() ) )
+						.build() ) );
+		return customerOrders;
 	}
 
 }
