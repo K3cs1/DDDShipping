@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <div th:replace="fragments/commonHeader :: header"></div>
+    <title>Error Details</title>
+</head>
+<body>
+<article>
+    <header>
+        <h1 th:text="${error}">Error happened</h1>
+    </header>
+    <section>
+        <p th:text="${message}">This is the message</p>
+        <p th:text="${path}">This is the path</p>
+        <p th:text="${status}">This is the status</p>
+        <p th:text="${timestamp}">This is the timestamp</p>
+    </section>
+</article>
+</body>
+</html>

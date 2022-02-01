@@ -27,5 +27,5 @@ module org.kecsi.dddmodules.mainapp {
 	requires transitive org.kecsi.dddmodules.infrastructure;
 	exports org.kecsi.dddmodules.mainapp;
 	opens org.kecsi.dddmodules.mainapp to spring.core, spring.beans, spring.context;
-	opens org.kecsi.dddmodules.controller to spring.core, spring.beans, spring.context;
+	opens org.kecsi.dddmodules.controller to spring.core, spring.beans, spring.context, spring.web;
 }
