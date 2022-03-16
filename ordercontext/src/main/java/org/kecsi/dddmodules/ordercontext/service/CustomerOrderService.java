@@ -8,10 +8,12 @@ import org.kecsi.dddmodules.ordercontext.repository.CustomerOrderRepository;
 import org.kecsi.dddmodules.sharedkernel.events.EventBus;
 import org.kecsi.dddmodules.sharedkernel.service.SequenceGeneratorService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import org.springframework.stereotype.Component;
 
 @Component
 @NoArgsConstructor
+@EnableMongoRepositories( "org.kecsi.dddmodules.ordercontext.repository" )
 public class CustomerOrderService implements OrderService {
 
 	private CustomerOrderRepository orderRepository;

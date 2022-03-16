@@ -8,10 +8,12 @@ import org.kecsi.dddmodules.shippingcontext.model.Parcel;
 import org.kecsi.dddmodules.shippingcontext.model.ShippableOrder;
 import org.kecsi.dddmodules.shippingcontext.repository.ShippingOrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import org.springframework.stereotype.Component;
 
 @Component
 @NoArgsConstructor
+@EnableMongoRepositories( "org.kecsi.dddmodules.shippingcontext.repository" )
 public class ParcelShippingService implements ShippingService {
 	private ShippingOrderRepository shippingOrderRepository;
 	private EventBus eventBus;

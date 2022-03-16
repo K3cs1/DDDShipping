@@ -2,14 +2,14 @@ plugins {
     id 'java'
     id 'java-library'
     id 'application'
-    id 'org.springframework.boot' version '2.5.2'
+    id 'org.springframework.boot' version '2.6.4'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 }
 
 group 'org.kecsi.dddmodules'
 version '1.0-SNAPSHOT'
-sourceCompatibility = 11
-targetCompatibility = 11
+sourceCompatibility = 17
+targetCompatibility = 17
 
 repositories {
     mavenCentral()
@@ -26,12 +26,14 @@ dependencies {
     testImplementation( 'org.junit.platform:junit-platform-launcher' )
     testImplementation( 'org.junit.platform:junit-platform-runner' )
 
-    testImplementation group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.32'
+    testImplementation group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.36'
     implementation group: 'org.apiguardian', name: 'apiguardian-api', version: '1.1.0'
     testRuntimeOnly group: 'org.apiguardian', name: 'apiguardian-api', version: '1.1.0'
 
     implementation 'org.projectlombok:lombok:1.18.20'
     annotationProcessor( 'org.projectlombok:lombok:1.18.20' )
+    implementation group: 'org.slf4j', name: 'slf4j-api', version: '1.7.36'
+    implementation group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.36'
 
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation 'org.springframework.boot:spring-boot-starter-web'

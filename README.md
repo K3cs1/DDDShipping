@@ -1,6 +1,6 @@
 ###### Domain Driven Design Shipping application
 
-**Required: Java 11+**
+**Required: Java 17**
 
 `./gradlew clean build`  
 `./gradlew mainapp:bootRun`
@@ -13,12 +13,10 @@ docker-compose up -d
 docker exec -it dddshipping_mongodb bash
 ````
 
-*Inside the MongoDB Docker container, setup a user for the application*
+*Before run the application, create a new database with name "dddshipping" :*
+
+*Compass connection url:*
 
 ````
-mongo
-> use dddshipping;
-> db.createUser( { user: "dddshippinguser", pwd: "dddshipping12345", roles: [ { role: "readWrite", db: "dddshipping" } ] } );
+mongodb://rootuser:rootpass@localhost:27017/?authSource=admin&readPreference=primary&appname=MongoDB%20Compass&ssl=false
 ````
-
-`mongo -u dddshippinguser -p dddshipping12345 --authenticationDatabase dddshipping`
