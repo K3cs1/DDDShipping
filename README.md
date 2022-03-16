@@ -1,5 +1,7 @@
 ###### Domain Driven Design Shipping application
 
+https://dddshipping.herokuapp.com/
+
 **Required: Java 17**
 
 `./gradlew clean build`  
