@@ -2,27 +2,21 @@ package org.kecsi.dddmodules.shippingcontext.service;
 
 import java.util.Optional;
 
-import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
 import org.kecsi.dddmodules.sharedkernel.events.EventBus;
 import org.kecsi.dddmodules.shippingcontext.model.Parcel;
 import org.kecsi.dddmodules.shippingcontext.model.ShippableOrder;
 import org.kecsi.dddmodules.shippingcontext.repository.ShippingOrderRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import org.springframework.stereotype.Component;
 
 @Component
-@NoArgsConstructor
+@AllArgsConstructor
 @EnableMongoRepositories( "org.kecsi.dddmodules.shippingcontext.repository" )
 public class ParcelShippingService implements ShippingService {
-	private ShippingOrderRepository shippingOrderRepository;
-	private EventBus eventBus;
 
-	@Autowired
-	public ParcelShippingService( ShippingOrderRepository shippingOrderRepository, EventBus eventBus ) {
-		this.shippingOrderRepository = shippingOrderRepository;
-		this.eventBus = eventBus;
-	}
+	private final ShippingOrderRepository shippingOrderRepository;
+	private final EventBus eventBus;
 
 	@Override
 	public void shipOrder( ShippableOrder shippableOrder ) {

@@ -4,6 +4,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import lombok.AllArgsConstructor;
 import org.kecsi.dddmodules.infrastructure.service.AdapterService;
 import org.kecsi.dddmodules.ordercontext.model.CustomerOrder;
 import org.kecsi.dddmodules.ordercontext.model.OrderItem;
@@ -12,26 +13,19 @@ import org.kecsi.dddmodules.ordercontext.service.OrderService;
 import org.kecsi.dddmodules.shippingcontext.model.Parcel;
 import org.kecsi.dddmodules.shippingcontext.model.ProductType;
 import org.kecsi.dddmodules.shippingcontext.service.ShippingService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+@AllArgsConstructor
 @Controller
 public class ShippingController {
 
-	private OrderService orderService;
-	private ShippingService shippingService;
-	private AdapterService adapterService;
-
-	@Autowired
-	public ShippingController( OrderService orderService, ShippingService shippingService, AdapterService adapterService ) {
-		this.orderService = orderService;
-		this.shippingService = shippingService;
-		this.adapterService = adapterService;
-	}
+	private final OrderService orderService;
+	private final ShippingService shippingService;
+	private final AdapterService adapterService;
 
 	@ModelAttribute( "allProducts" )
 	public List<ProductType> populateProducts() {

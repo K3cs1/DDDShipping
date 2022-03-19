@@ -2,54 +2,46 @@ package org.kecsi.dddmodules.ordercontext.service;
 
 import java.util.List;
 
-import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
 import org.kecsi.dddmodules.ordercontext.model.CustomerOrder;
 import org.kecsi.dddmodules.ordercontext.repository.CustomerOrderRepository;
 import org.kecsi.dddmodules.sharedkernel.events.EventBus;
 import org.kecsi.dddmodules.sharedkernel.service.SequenceGeneratorService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import org.springframework.stereotype.Component;
 
 @Component
-@NoArgsConstructor
+@AllArgsConstructor
 @EnableMongoRepositories( "org.kecsi.dddmodules.ordercontext.repository" )
 public class CustomerOrderService implements OrderService {
 
-	private CustomerOrderRepository orderRepository;
-	private EventBus eventBus;
-	private SequenceGeneratorService sequenceGeneratorService;
-
-	@Autowired
-	public CustomerOrderService( CustomerOrderRepository orderRepository, EventBus eventBus, SequenceGeneratorService sequenceGeneratorService ) {
-		this.orderRepository = orderRepository;
-		this.eventBus = eventBus;
-		this.sequenceGeneratorService = sequenceGeneratorService;
-	}
+	private final CustomerOrderRepository customerOrderRepository;
+	private final EventBus eventBus;
+	private final SequenceGeneratorService sequenceGeneratorService;
 
 	@Override
 	public CustomerOrder findCustomerOrderByOrderId( long orderId ) {
-		return this.orderRepository.findCustomerOrderByOrderId( orderId );
+		return customerOrderRepository.findCustomerOrderByOrderId( orderId );
 	}
 
 	@Override
 	public void placeOrder( CustomerOrder order ) {
 		order.setOrderId( sequenceGeneratorService.generateSequence( CustomerOrder.SEQUENCE_NAME ) );
-		this.orderRepository.save( order );
+		customerOrderRepository.save( order );
 	}
 
 	@Override
 	public List<CustomerOrder> getCustomerOrders() {
-		return this.orderRepository.findAll();
+		return customerOrderRepository.findAll();
 	}
 
 	@Override
 	public void deleteCustomerOrder( long orderId ) {
-		orderRepository.deleteCustomerOrderByOrderId( orderId );
+		customerOrderRepository.deleteCustomerOrderByOrderId( orderId );
 	}
 
 	@Override
 	public EventBus getEventBus() {
-		return this.eventBus;
+		return eventBus;
 	}
 }
