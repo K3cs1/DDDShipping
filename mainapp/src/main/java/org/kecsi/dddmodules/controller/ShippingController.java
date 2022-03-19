@@ -47,8 +47,21 @@ public class ShippingController {
 		if ( bindingResult.hasErrors() ) {
 			return "customerOrder";
 		}
-		orderService.placeOrder( customerOrder );
-		shippingService.shipOrder( adapterService.customerToShippableOrder( customerOrder ) );
+		if ( customerOrder.getId() != null || !customerOrder.getId().isBlank() ) {
+			customerOrder.setId( null );
+		}
+		CustomerOrder customerOrderSaved = orderService.placeOrder( customerOrder );
+		shippingService.shipOrder( adapterService.customerToShippableOrder( customerOrderSaved ) );
+		return "redirect:/";
+	}
+
+	@PostMapping( value = "/shippingManagement", params = { "updateCustomerOrder" } )
+	public String updateCustomerOrder( @Valid CustomerOrder customerOrder, BindingResult bindingResult ) {
+		if ( bindingResult.hasErrors() ) {
+			return "customerOrder";
+		}
+		CustomerOrder customerOrderSaved = orderService.placeOrder( customerOrder );
+		shippingService.shipOrder( adapterService.customerToShippableOrder( customerOrderSaved ) );
 		return "redirect:/";
 	}
 
@@ -59,32 +72,38 @@ public class ShippingController {
 	}
 
 	@PostMapping( value = "/shippingManagement", params = { "addOrderItem" } )
-	public String addOrderItem( CustomerOrder customerOrder, BindingResult bindingResult ) {
+	public String addOrderItem( CustomerOrder customerOrder, BindingResult bindingResult, Model model ) {
 		if ( bindingResult.hasErrors() ) {
 			return "customerOrder";
 		}
-		customerOrder.getOrderItems().add( new OrderItem() );
+		if ( customerOrder.getOrderItems() == null ) {
+			customerOrder.setOrderItems( List.of( OrderItem.builder().build() ) );
+		} else {
+			customerOrder.getOrderItems().add( OrderItem.builder().build() );
+		}
+		model.addAttribute( "customerOrder", customerOrder );
 		return "customerOrder";
 	}
 
 	@PostMapping( value = "/shippingManagement", params = { "removeOrderItem" } )
-	public String removeOrderItems( CustomerOrder customerOrder, BindingResult bindingResult, final HttpServletRequest request ) {
+	public String removeOrderItems( CustomerOrder customerOrder, BindingResult bindingResult, final HttpServletRequest request, Model model ) {
 		if ( bindingResult.hasErrors() ) {
 			return "customerOrder";
 		}
 		Integer orderItemRow = Integer.valueOf( request.getParameter( "removeOrderItem" ) );
 		customerOrder.getOrderItems().remove( orderItemRow.intValue() );
+		model.addAttribute( "customerOrder", customerOrder );
 		return "customerOrder";
 	}
 
 	@PostMapping( value = "/editCustomerOrder/{orderId}" )
-	public String editOrderItems( @PathVariable( value = "orderId" ) long orderId, Model model ) {
+	public String editOrderItems( @PathVariable( value = "orderId" ) String orderId, Model model ) {
 		model.addAttribute( "customerOrder", orderService.findCustomerOrderByOrderId( orderId ) );
 		return "customerOrder";
 	}
 
 	@DeleteMapping( "/deleteCustomerOrder/{orderId}" )
-	public String deleteCustomerOrder( @PathVariable( value = "orderId" ) long orderId ) {
+	public String deleteCustomerOrder( @PathVariable( value = "orderId" ) String orderId ) {
 		orderService.deleteCustomerOrder( orderId );
 		shippingService.deleteSippableOrderByOrderId( orderId );
 		return "redirect:/";
@@ -92,7 +111,7 @@ public class ShippingController {
 
 	@PostMapping( value = "/showShippings", produces = MediaType.APPLICATION_JSON_VALUE )
 	@ResponseBody
-	public Parcel showShippings( @RequestBody long orderId ) {
+	public Parcel showShippings( @RequestBody String orderId ) {
 		return shippingService.getParcelByOrderId( orderId ).get();
 	}
 

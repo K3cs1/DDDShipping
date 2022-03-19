@@ -10,6 +10,7 @@
     <div class="row">
         <div class="col-md-9">
             <form action="#" th:action="@{/shippingManagement}" th:object="${customerOrder}" method="post">
+                <input th:hidden="orderId" th:field="*{id}"/>
                 <div th:if="${#fields.hasErrors('orderItems')}">
                     <span th:if="${#fields.hasErrors('orderItems')}" th:errors="*{orderItems}" class="text-danger"></span>
                 </div>
@@ -31,9 +32,9 @@
                 </div>
                 <div class="row" th:each="row,rowStat : *{orderItems}">
                     <div class="form-group col">
-                        <label th:for="*{orderItems[__${rowStat.index}__].productId}" class="col-form-label"
+                        <label th:for="*{orderItems[__${rowStat.index}__].id}" class="col-form-label"
                                th:text="#{shipping.orderItems.products}">Products</label>
-                        <select th:field="*{orderItems[__${rowStat.index}__].productId}" class="form-select">
+                        <select th:field="*{orderItems[__${rowStat.index}__].id}" class="form-select">
                             <option th:each="product : ${allProducts}" th:value="${product.productId}"
                                     th:text="#{${'shipping.product.' + product.productName}}">Product
                             </option>
@@ -76,8 +77,15 @@
                     <div class="col-md-3 mt-5">
                         <button type="submit" class="btn btn-primary" name="addOrderItem" th:text="#{shipping.orderItems.add}">Add order item</button>
                     </div>
-                    <div class="col-md-3 mt-5">
-                        <button type="submit" class="btn btn-primary" name="addCustomerOrder" th:text="#{shipping.add}">Add customer order</button>
+                    <div th:if="${#strings.isEmpty(customerOrder.id)}">
+                        <div class="col-md-3 mt-5">
+                            <button type="submit" class="btn btn-primary" name="addCustomerOrder" th:text="#{shipping.add}">Add customer order</button>
+                        </div>
+                    </div>
+                    <div th:unless="${#strings.isEmpty(customerOrder.id)}">
+                        <div class="col-md-3 mt-5">
+                            <button type="submit" class="btn btn-primary" name="updateCustomerOrder" th:text="#{shipping.update}">Update customer order</button>
+                        </div>
                     </div>
                     <div class="col-md-3 mt-5">
                         <p><a href="/" class="btn btn-primary" th:text="#{shipping.back}">Back</a></p>

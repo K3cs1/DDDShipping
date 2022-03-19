@@ -1,12 +1,13 @@
 package org.kecsi.dddmodules.ordercontext.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import lombok.AllArgsConstructor;
 import org.kecsi.dddmodules.ordercontext.model.CustomerOrder;
 import org.kecsi.dddmodules.ordercontext.repository.CustomerOrderRepository;
+import org.kecsi.dddmodules.ordercontext.repository.OrderItemRepository;
 import org.kecsi.dddmodules.sharedkernel.events.EventBus;
-import org.kecsi.dddmodules.sharedkernel.service.SequenceGeneratorService;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import org.springframework.stereotype.Component;
 
@@ -16,18 +17,21 @@ import org.springframework.stereotype.Component;
 public class CustomerOrderService implements OrderService {
 
 	private final CustomerOrderRepository customerOrderRepository;
+	private final OrderItemRepository orderItemRepository;
 	private final EventBus eventBus;
-	private final SequenceGeneratorService sequenceGeneratorService;
 
 	@Override
-	public CustomerOrder findCustomerOrderByOrderId( long orderId ) {
-		return customerOrderRepository.findCustomerOrderByOrderId( orderId );
+	public CustomerOrder findCustomerOrderByOrderId( String orderId ) {
+		return customerOrderRepository.findCustomerOrderById( orderId )
+				.orElseThrow( () -> new IllegalStateException( "Customer order not found by id " + orderId ) );
 	}
 
 	@Override
-	public void placeOrder( CustomerOrder order ) {
-		order.setOrderId( sequenceGeneratorService.generateSequence( CustomerOrder.SEQUENCE_NAME ) );
-		customerOrderRepository.save( order );
+	public CustomerOrder placeOrder( CustomerOrder order ) {
+		if ( order.getOrderItems() != null && !order.getOrderItems().isEmpty() ) {
+			orderItemRepository.saveAll( order.getOrderItems() );
+		}
+		return customerOrderRepository.save( order );
 	}
 
 	@Override
@@ -36,8 +40,14 @@ public class CustomerOrderService implements OrderService {
 	}
 
 	@Override
-	public void deleteCustomerOrder( long orderId ) {
-		customerOrderRepository.deleteCustomerOrderByOrderId( orderId );
+	public void deleteCustomerOrder( String orderId ) {
+		Optional<CustomerOrder> customerOrderOptional = customerOrderRepository.findCustomerOrderById( orderId );
+		if ( customerOrderOptional.isPresent() ) {
+			orderItemRepository.deleteAll( customerOrderOptional.get().getOrderItems() );
+			customerOrderRepository.deleteCustomerOrderById( orderId );
+		} else {
+			throw new IllegalStateException( "Customer order not found by id: " + orderId );
+		}
 	}
 
 	@Override

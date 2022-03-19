@@ -3,7 +3,7 @@
 <head></head>
 <body>
 <div th:fragment="modalDiv" th:remove="tag">
-    <div class="modal fade" th:id="@{|shippingsModal-${order.orderId}|}" tabindex="-1" aria-labelledby="shippingsModalLabel" aria-hidden="true">
+    <div class="modal fade" th:id="@{|shippingsModal-${order.id}|}" tabindex="-1" aria-labelledby="shippingsModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
@@ -11,7 +11,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <div th:id="@{|shippingsModalBody-${order.orderId}|}"></div>
+                    <div th:id="@{|shippingsModalBody-${order.id}|}"></div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" th:text="#{shipping.button.close.modal}">Close</button>

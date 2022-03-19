@@ -13,11 +13,11 @@ public class ShippableOrderAdapterService implements AdapterService {
 	@Override
 	public ShippableOrder customerToShippableOrder( CustomerOrder customerOrder ) {
 		return ShippableOrder.builder()
-				.orderId( customerOrder.getOrderId() )
+				.id( customerOrder.getId() )
 				.totalPrice( customerOrder.calculateTotalPrice() )
 				.packageItems( customerOrder.getOrderItems().stream()
 						.map( orderItem -> PackageItem.builder()
-								.productId( orderItem.getProductId() )
+								.productId( orderItem.getId() )
 								.weight( orderItem.getUnitWeight() )
 								.estimatedValue( orderItem.getQuantity() * orderItem.getUnitPrice() ).build() )
 						.collect( Collectors.toList() ) )

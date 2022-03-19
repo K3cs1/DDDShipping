@@ -10,23 +10,18 @@ import javax.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.Transient;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @Document
 public class CustomerOrder {
 
-	@Transient
-	public static final String SEQUENCE_NAME = "customer_order_sequence";
-
 	@Id
-	private long orderId;
+	private String id;
 
 	@NotNull
 	@Size( min = 1, max = 100 )
@@ -39,6 +34,7 @@ public class CustomerOrder {
 	@NotEmpty
 	@Valid
 	@Builder.Default
+	@DBRef
 	private List<OrderItem> orderItems = new ArrayList<>();
 
 	public double calculateTotalPrice() {

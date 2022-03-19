@@ -3,20 +3,17 @@ package org.kecsi.dddmodules.shippingcontext.model;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@Document
 public class PackageItem {
 
 	@Id
-	private long productId;
-
+	private String productId;
 	private float weight;
-
 	private float estimatedValue;
-
 }

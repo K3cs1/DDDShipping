@@ -9,11 +9,11 @@ import org.springframework.stereotype.Service;
 @Service
 public interface OrderService extends ApplicationService {
 
-	CustomerOrder findCustomerOrderByOrderId( long orderId );
+	CustomerOrder findCustomerOrderByOrderId( String orderId );
 
-	void placeOrder( CustomerOrder order );
+	CustomerOrder placeOrder( CustomerOrder order );
 
 	List<CustomerOrder> getCustomerOrders();
 
-	void deleteCustomerOrder( long orderId );
+	void deleteCustomerOrder( String orderId );
 }

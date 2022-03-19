@@ -20,22 +20,34 @@
             </thead>
             <tbody>
             <tr th:each="order : ${customerOrders}">
-                <form th:id="${'mainForm-' + order.orderId}" action="#" method="">
+                <form th:id="${'mainForm-' + order.id}" action="#" method="">
                     <td th:text="#{${'shipping.payment.method.' + order.paymentMethod}}"></td>
                     <td th:text="${order.address}"></td>
                     <td>
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                th:attr="data-bs-target=@{|#shippingsModal-${order.orderId}|}, data-id=${order.orderId}"
+                                th:attr="data-bs-target=@{|#shippingsModal-${order.id}|}, data-id=${order.id}"
                                 th:text="#{shipping.show.shippings}">Show shippings
                         </button>
                     </td>
                     <td>
-                        <input type="hidden" name="orderId" th:value="${order.orderId}">
-                        <button type="submit" class="btn btn-primary" name="editOrder" th:onclick="|submitForm(${order.orderId}, 'editOrder')|"
+                        <!--                        <input th:hidden="orderId" th:value="${order.id}"/>-->
+                        <!--                        <button type="submit" class="btn btn-primary" name="editOrder"-->
+                        <!--                                th:onclick="'javascript:submitForm(\''+${order.id}+'\',\'editOrder\')'"-->
+                        <!--                                th:text="#{shipping.edit.customer.order}">Edit customer order-->
+                        <!--                        </button>-->
+                        <!--                        <button type="submit" class="btn btn-danger" name="deleteOrder"-->
+                        <!--                                th:onclick="'javascript:submitForm(\''+${order.id}+'\',\'deleteOrder\')'"-->
+                        <!--                                th:text="#{shipping.delete.customer.order}">Delete customer order-->
+
+                        <input th:hidden="orderId" th:value="${order.id}"/>
+                        <button type="submit" class="btn btn-primary" name="editOrder"
+                                th:onclick="submitForm([[${order.id}]],'editOrder')"
                                 th:text="#{shipping.edit.customer.order}">Edit customer order
                         </button>
-                        <button type="submit" class="btn btn-danger" name="deleteOrder" th:onclick="|submitForm(${order.orderId}, 'deleteOrder')|"
+                        <button type="submit" class="btn btn-danger" name="deleteOrder"
+                                th:onclick="submitForm([[${order.id}]],'deleteOrder')"
                                 th:text="#{shipping.delete.customer.order}">Delete customer order
+
                         </button>
                     </td>
                 </form>
