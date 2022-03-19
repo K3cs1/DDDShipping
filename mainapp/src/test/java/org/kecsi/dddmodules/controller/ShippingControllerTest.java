@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -60,13 +59,13 @@ public class ShippingControllerTest {
 		// Prepare mocked service method
 		doReturn( Optional.of( mockParcel ) ).when( shippingService ).getParcelByOrderId( mockParcel.getOrderId() );
 
-		// Perform GET request
+		// Perform POST request
 		mockMvc.perform( post( "/showShippings" )
 						.contentType( MediaType.APPLICATION_JSON )
-						.content( new ObjectMapper().writeValueAsString( 1L ) ) )
+						.content( "6235db9dada5bc366b93e3e8" ) )
 				.andExpect( status().isOk() )
 				.andExpect( content().contentType( MediaType.APPLICATION_JSON_VALUE ) )
-				.andExpect( jsonPath( "$.orderId", is( 1 ) ) )
+				.andExpect( jsonPath( "$.orderId", is( "6235db9dada5bc366b93e3e8" ) ) )
 				.andExpect( jsonPath( "$.totalPrice", is( 10.0 ) ) );
 	}
 
@@ -84,15 +83,15 @@ public class ShippingControllerTest {
 
 	private Parcel initParcelData() {
 		return Parcel.builder()
-				.orderId( 1 )
+				.orderId( "6235db9dada5bc366b93e3e8" )
 				.totalPrice( 10 )
 				.packageItems( List.of( PackageItem.builder()
-								.productId( 1 )
+								.productId( "1" )
 								.estimatedValue( 10 )
 								.weight( 10 )
 								.build(),
 						PackageItem.builder()
-								.productId( 2 )
+								.productId( "2" )
 								.estimatedValue( 20 )
 								.weight( 20 )
 								.build() ) )
@@ -103,34 +102,34 @@ public class ShippingControllerTest {
 		List<CustomerOrder> customerOrders = new ArrayList<>();
 		customerOrders.addAll( List.of(
 				CustomerOrder.builder()
-						.id( 1L )
+						.id( "6235db9dada5bc366b93e3e8" )
 						.address( "Test Street 1." )
 						.paymentMethod( "Credit Card" )
 						.orderItems( List.of( OrderItem.builder()
-										.id( 1L )
+										.id( "1" )
 										.quantity( 10 )
 										.unitWeight( 20 )
 										.unitPrice( 50 )
 										.build(),
 								OrderItem.builder()
-										.id( 2L )
+										.id( "2" )
 										.quantity( 20 )
 										.unitWeight( 30 )
 										.unitPrice( 25 )
 										.build() ) )
 						.build(),
 				CustomerOrder.builder()
-						.id( 2L )
+						.id( "6235dbe3ada5bc366b93e3e9" )
 						.address( "Test Street 2." )
 						.paymentMethod( "Debit Card " )
 						.orderItems( List.of( OrderItem.builder()
-										.id( 1L )
+										.id( "1" )
 										.quantity( 30 )
 										.unitWeight( 40 )
 										.unitPrice( 60 )
 										.build(),
 								OrderItem.builder()
-										.id( 2L )
+										.id( "2" )
 										.quantity( 70 )
 										.unitWeight( 80 )
 										.unitPrice( 90 )
