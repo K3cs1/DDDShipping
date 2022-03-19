@@ -32,7 +32,7 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
     // https://mvnrepository.com/artifact/org.mongodb/mongodb-driver-sync
-    implementation 'org.mongodb:mongodb-driver-sync:4.3.1'
+    implementation 'org.mongodb:mongodb-driver-sync:4.5.0'
 }
 
 bootJar {
