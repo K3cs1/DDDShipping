@@ -4,8 +4,7 @@ https://dddshipping.herokuapp.com/
 
 **Required: Java 17**
 
-`./gradlew clean build`  
-`./gradlew mainapp:bootRun`
+`./gradlew mainapp:bootRun --args='--spring.profiles.active=dev'`
 
 **MongoDB Docker setup**
 
