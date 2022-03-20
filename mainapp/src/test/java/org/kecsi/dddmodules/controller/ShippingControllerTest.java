@@ -8,6 +8,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.kecsi.dddmodules.mainapp.Application;
 import org.kecsi.dddmodules.ordercontext.model.CustomerOrder;
 import org.kecsi.dddmodules.ordercontext.model.OrderItem;
 import org.kecsi.dddmodules.ordercontext.service.OrderService;
@@ -24,12 +25,13 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.doReturn;
+import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @ExtendWith( SpringExtension.class )
-@SpringBootTest( classes = { org.kecsi.dddmodules.mainapp.Application.class }, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT )
+@SpringBootTest( classes = { Application.class }, webEnvironment = RANDOM_PORT )
 @AutoConfigureMockMvc
 public class ShippingControllerTest {
 
@@ -66,7 +68,8 @@ public class ShippingControllerTest {
 				.andExpect( status().isOk() )
 				.andExpect( content().contentType( MediaType.APPLICATION_JSON_VALUE ) )
 				.andExpect( jsonPath( "$.orderId", is( "6235db9dada5bc366b93e3e8" ) ) )
-				.andExpect( jsonPath( "$.totalPrice", is( 10.0 ) ) );
+				.andExpect( jsonPath( "$.totalPrice", is( 10.0 ) ) )
+				.andExpect( jsonPath( "$.packageItems[0].productId", is( "1" ) ) );
 	}
 
 	@Test
@@ -87,13 +90,13 @@ public class ShippingControllerTest {
 				.totalPrice( 10 )
 				.packageItems( List.of( PackageItem.builder()
 								.productId( "1" )
-								.estimatedValue( 10 )
-								.weight( 10 )
+								.estimatedValue( 10F )
+								.weight( 10F )
 								.build(),
 						PackageItem.builder()
 								.productId( "2" )
-								.estimatedValue( 20 )
-								.weight( 20 )
+								.estimatedValue( 20F )
+								.weight( 20F )
 								.build() ) )
 				.build();
 	}
