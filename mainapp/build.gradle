@@ -88,4 +88,7 @@ heroku {
     appName = "dddshipping"
     includes = [ "mainapp/build/libs/mainapp-1.0-SNAPSHOT.jar" ]
     includeBuildDir = false
+//    processTypes(
+//            web: "java -Dspring.profiles.active=heroku -jar mainapp/build/libs/mainapp-1.0-SNAPSHOT.jar"
+//    )
 }
