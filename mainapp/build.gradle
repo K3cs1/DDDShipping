@@ -2,9 +2,9 @@ plugins {
     id 'java'
     id 'java-library'
     id 'application'
-    id 'org.springframework.boot' version '2.6.4'
-    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
-    id "com.heroku.sdk.heroku-gradle" version "2.0.0"
+    id 'org.springframework.boot' version "${springBootPluginVersion}"
+    id 'io.spring.dependency-management' version "${springDependencyManagementPluginVersion}"
+    id "com.heroku.sdk.heroku-gradle" version "${herokuGardlePluginVersion}"
 }
 
 group 'org.kecsi.dddmodules'
@@ -19,30 +19,26 @@ repositories {
 dependencies {
     api project( ':infrastructure' )
 
-    testImplementation( enforcedPlatform( 'org.junit:junit-bom:5.8.1' ) )
+    testImplementation( enforcedPlatform( "org.junit:junit-bom:${junit5Version}" ) )
     testImplementation( 'org.junit.jupiter:junit-jupiter' )
     testImplementation( 'org.junit.jupiter:junit-jupiter-api' )
     testImplementation( 'org.junit.jupiter:junit-jupiter-engine' )
     testImplementation( 'org.junit.jupiter:junit-jupiter-params' )
     testImplementation( 'org.junit.platform:junit-platform-launcher' )
     testImplementation( 'org.junit.platform:junit-platform-runner' )
-
-    testImplementation group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.36'
-    implementation group: 'org.apiguardian', name: 'apiguardian-api', version: '1.1.0'
-    testRuntimeOnly group: 'org.apiguardian', name: 'apiguardian-api', version: '1.1.0'
-
-    implementation 'org.projectlombok:lombok:1.18.20'
-    annotationProcessor( 'org.projectlombok:lombok:1.18.20' )
-    implementation group: 'org.slf4j', name: 'slf4j-api', version: '1.7.36'
-    implementation group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.36'
-
+    testImplementation "org.slf4j:slf4j-simple:${slf4jVersion}"
+    implementation "org.apiguardian:apiguardian-api:${apiguardianApiVersion}"
+    testRuntimeOnly "org.apiguardian:apiguardian-api:${apiguardianApiVersion}"
+    implementation "org.projectlombok:lombok:${lombokVersion}"
+    annotationProcessor( "org.projectlombok:lombok:${lombokVersion}" )
+    implementation "org.slf4j:slf4j-api:${slf4jVersion}"
+    implementation "org.slf4j:slf4j-simple:${slf4jVersion}"
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
     implementation 'org.springframework.boot:spring-boot-starter-tomcat'
     //developmentOnly 'org.springframework.boot:spring-boot-starter-devtools'
-
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
@@ -52,10 +48,6 @@ configurations {
         exclude group: 'ch.qos.logback', module: 'logback-classic'
         exclude group: 'org.apache.logging.log4j', module: 'log4j-to-slf4j'
     }
-//    developmentOnly
-//    runtimeClasspath {
-//        extendsFrom developmentOnly
-//    }
 }
 
 application {
