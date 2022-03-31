@@ -50,4 +50,4 @@ jobs:
           app-name: 'dddshipping'
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_59F5EAEBD07946D6A7A34C8536964044 }}
-          package: 'mainapp/build/libs/mainapp-1.0-SNAPSHOT.jar'
+          package: 'mainapp-1.0-SNAPSHOT.jar'
