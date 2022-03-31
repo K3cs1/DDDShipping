@@ -5,12 +5,13 @@ plugins {
     id 'org.springframework.boot' version "${springBootPluginVersion}"
     id 'io.spring.dependency-management' version "${springDependencyManagementPluginVersion}"
     id "com.heroku.sdk.heroku-gradle" version "${herokuGardlePluginVersion}"
+    id "com.microsoft.azure.azurewebapp" version "${azurewebappPluginVersion}"
 }
 
 group 'org.kecsi.dddmodules'
 version '1.0-SNAPSHOT'
-sourceCompatibility = 17
-targetCompatibility = 17
+sourceCompatibility = 11
+targetCompatibility = 11
 
 repositories {
     mavenCentral()
@@ -83,4 +84,23 @@ heroku {
 //    processTypes(
 //            web: "java -Dspring.profiles.active=heroku -jar mainapp/build/libs/mainapp-1.0-SNAPSHOT.jar"
 //    )
+}
+
+azurewebapp {
+    subscription = '2bf2e774-2494-402f-8557-97ef7dcae6d4'
+    resourceGroup = 'kecsiEU'
+    appName = 'dddshipping'
+    pricingTier = 'P1v2'
+    region = 'centralus' //'westeurope'
+    runtime {
+        os = 'Linux'
+        webContainer = 'Java SE' // or 'Java SE' if you want to run an executable jar  'Tomcat 9.0'
+        javaVersion = 'Java 11'
+    }
+//    appSettings {
+//        <key> = <value>
+//    }
+    auth {
+        type = 'azure_cli' // support azure_cli, oauth2, device_code and service_principal
+    }
 }
