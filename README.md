@@ -1,7 +1,5 @@
 ###### Domain Driven Design Shipping application
 
-https://dddshipping.herokuapp.com/
-
 **Required: Java 17**
 
 `./gradlew mainapp:bootRun --args='--spring.profiles.active=dev'`
